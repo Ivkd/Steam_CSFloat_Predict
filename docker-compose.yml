@@ -1,0 +1,40 @@
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+  
+#   postgres_1:
+#     image: postgres:18.1
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: 626862
+#       POSTGRES_DB: CSfloat_items
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - pgdata_csf:/var/lib/postgresql/data
+#       - C:\Users\user\Desktop\My_poject\X\APIs\csflaot\csfloat_db.sql
+#   postgres_2:
+#     image: postgres:18.1
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: 626862
+#       POSTGRES_DB: Steam_items
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - pgdata_steam:/var/lib/postgresql/data
+#       - C:\Users\user\Desktop\My_poject\X\APIs\steam\steam_db.sql
+
+# pgadmin:
+#     image: dpage/pgadmin4
+#     environment:
+#       PGADMIN_DEFAULT_EMAIL: roma@example.com
+#       PGADMIN_DEFAULT_PASSWORD: 626862
+#     ports:
+#       - "5050:80"
+
+# volumes:
+#   pgdata_csf:
+#   pgdata_steam:

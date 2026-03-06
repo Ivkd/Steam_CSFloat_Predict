@@ -1,0 +1,800 @@
+2026-02-03 16:32:34,622 INFO APIs.help_func.log: csf, 0
+2026-02-03 16:32:34,628 INFO APIs.help_func.log: steam count: 0
+2026-02-03 16:32:34,629 INFO APIs.help_func.log: steam, 0, count: 0, result: []
+2026-02-03 16:32:34,997 INFO APIs.help_func.log: steam count: 0
+2026-02-03 16:32:34,997 INFO APIs.help_func.log: steam, 0, count: 0, result: []
+2026-02-03 16:32:35,257 INFO APIs.help_func.log: steam count: 0
+2026-02-03 16:32:35,257 INFO APIs.help_func.log: steam, 0, count: 0, result: []
+2026-02-03 16:32:35,574 INFO APIs.help_func.log: csf, 1
+2026-02-03 16:32:38,422 INFO APIs.help_func.log: csf, 4
+2026-02-03 16:32:39,387 INFO APIs.help_func.log: csf, 5
+2026-02-03 16:32:40,004 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:32:40,006 INFO APIs.help_func.log: get_data: 5.694515s
+2026-02-03 16:32:40,006 INFO APIs.help_func.log: get_data called 1 times
+2026-02-03 16:32:42,278 INFO APIs.help_func.log: csf, 8
+2026-02-03 16:32:43,241 INFO APIs.help_func.log: csf, 9
+2026-02-03 16:32:46,282 INFO APIs.help_func.log: csf, 12
+2026-02-03 16:32:47,258 INFO APIs.help_func.log: csf, 13
+2026-02-03 16:34:25,022 INFO APIs.help_func.log: csf, 0
+2026-02-03 16:34:25,042 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:25,042 INFO APIs.help_func.log: steam work 0, remained: 325
+2026-02-03 16:34:25,885 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:26,662 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:28,891 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:31,012 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:34,592 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:34,592 INFO APIs.help_func.log: steam work 50, remained: 325
+2026-02-03 16:34:36,852 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:38,499 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:41,130 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:42,836 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:44,228 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:44,229 INFO APIs.help_func.log: steam work 100, remained: 325
+2026-02-03 16:34:45,923 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:48,446 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:50,874 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:54,418 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:56,828 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:34:56,828 INFO APIs.help_func.log: steam work 150, remained: 325
+2026-02-03 16:34:58,653 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:35:00,429 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:35:02,221 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:35:03,753 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:35:05,708 INFO APIs.help_func.log: steam count: 325
+2026-02-03 16:35:05,708 INFO APIs.help_func.log: steam work 200, remained: 325
+2026-02-03 16:36:37,370 INFO APIs.help_func.log: csf, 0
+2026-02-03 16:36:39,540 INFO APIs.help_func.log: steam work 0, remained: 390
+2026-02-03 16:36:49,970 INFO APIs.help_func.log: steam work 50, remained: 390
+2026-02-03 16:36:50,716 INFO APIs.help_func.log: steam, 60, count: 0, result: []
+2026-02-03 16:36:57,972 INFO APIs.help_func.log: get_data_skins: 20.995655s
+2026-02-03 16:36:57,972 INFO APIs.help_func.log: get_data_skins called 1 times
+2026-02-03 16:36:58,729 INFO APIs.help_func.log: get_items_csfloat: 21.753038s
+2026-02-03 16:37:09,022 INFO APIs.help_func.log: steam, 100, count: 0, result: []
+2026-02-03 16:37:09,274 INFO APIs.help_func.log: steam, 100, count: 0, result: []
+2026-02-03 16:37:09,498 INFO APIs.help_func.log: steam, 100, count: 0, result: []
+2026-02-03 16:37:09,744 INFO APIs.help_func.log: steam, 100, count: 0, result: []
+2026-02-03 16:37:20,089 INFO APIs.help_func.log: steam, 100, count: 0, result: []
+2026-02-03 16:37:25,761 INFO APIs.help_func.log: steam work 100, remained: 390
+2026-02-03 16:37:26,529 INFO APIs.help_func.log: steam, 110, count: 0, result: []
+2026-02-03 16:37:29,571 INFO APIs.help_func.log: steam, 120, count: 0, result: []
+2026-02-03 16:37:29,828 INFO APIs.help_func.log: steam, 120, count: 0, result: []
+2026-02-03 16:37:30,064 INFO APIs.help_func.log: steam, 120, count: 0, result: []
+2026-02-03 16:37:30,410 INFO APIs.help_func.log: steam, 120, count: 0, result: []
+2026-02-03 16:37:48,290 INFO APIs.help_func.log: steam, 150, count: 0, result: []
+2026-02-03 16:37:51,214 INFO APIs.help_func.log: steam work 150, remained: 390
+2026-02-03 16:38:07,658 INFO APIs.help_func.log: steam, 200, count: 0, result: []
+2026-02-03 16:38:07,913 INFO APIs.help_func.log: steam, 200, count: 0, result: []
+2026-02-03 16:38:08,159 INFO APIs.help_func.log: steam, 200, count: 0, result: []
+2026-02-03 16:38:08,524 INFO APIs.help_func.log: steam, 200, count: 0, result: []
+2026-02-03 16:38:08,833 INFO APIs.help_func.log: steam, 200, count: 0, result: []
+2026-02-03 16:38:09,130 INFO APIs.help_func.log: steam, 200, count: 0, result: []
+2026-02-03 16:38:11,915 INFO APIs.help_func.log: steam work 200, remained: 390
+2026-02-03 16:38:17,131 INFO APIs.help_func.log: steam, 220, count: 0, result: []
+2026-02-03 16:38:21,834 INFO APIs.help_func.log: steam, 230, count: 0, result: []
+2026-02-03 16:38:22,095 INFO APIs.help_func.log: steam, 230, count: 0, result: []
+2026-02-03 16:38:33,931 INFO APIs.help_func.log: steam, 250, count: 0, result: []
+2026-02-03 16:38:38,730 INFO APIs.help_func.log: steam work 250, remained: 390
+2026-02-03 16:38:39,506 INFO APIs.help_func.log: steam, 260, count: 0, result: []
+2026-02-03 16:38:46,322 INFO APIs.help_func.log: steam, 280, count: 0, result: []
+2026-02-03 16:38:46,625 INFO APIs.help_func.log: steam, 280, count: 0, result: []
+2026-02-03 16:38:49,433 INFO APIs.help_func.log: steam, 290, count: 0, result: []
+2026-02-03 16:38:49,681 INFO APIs.help_func.log: steam, 290, count: 0, result: []
+2026-02-03 16:38:49,939 INFO APIs.help_func.log: steam, 290, count: 0, result: []
+2026-02-03 16:38:50,314 INFO APIs.help_func.log: steam, 290, count: 0, result: []
+2026-02-03 16:38:55,439 INFO APIs.help_func.log: steam work 300, remained: 390
+2026-02-03 16:38:59,738 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:39:09,208 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 16:39:15,129 INFO APIs.help_func.log: steam work 350, remained: 390
+2026-02-03 16:39:31,898 INFO APIs.help_func.log: get_data: 174.916434s
+2026-02-03 16:39:31,898 INFO APIs.help_func.log: get_data called 1 times
+2026-02-03 16:39:33,295 INFO APIs.help_func.log: get_items_from_bd called 1 times
+2026-02-03 16:39:33,582 INFO APIs.help_func.log: get_similar_items called 1 times
+2026-02-03 16:39:37,051 INFO APIs.help_func.log: get_similar_items called 2 times
+2026-02-03 16:39:40,715 INFO APIs.help_func.log: get_similar_items called 3 times
+2026-02-03 16:39:44,245 INFO APIs.help_func.log: get_similar_items called 4 times
+2026-02-03 16:39:47,773 INFO APIs.help_func.log: get_similar_items called 5 times
+2026-02-03 16:39:51,391 INFO APIs.help_func.log: get_similar_items called 6 times
+2026-02-03 16:39:55,077 INFO APIs.help_func.log: get_similar_items called 7 times
+2026-02-03 16:39:58,695 INFO APIs.help_func.log: get_similar_items called 8 times
+2026-02-03 16:40:02,239 INFO APIs.help_func.log: get_similar_items called 9 times
+2026-02-03 16:40:05,791 INFO APIs.help_func.log: get_similar_items called 10 times
+2026-02-03 16:40:09,328 INFO APIs.help_func.log: get_similar_items called 11 times
+2026-02-03 16:40:12,854 INFO APIs.help_func.log: get_similar_items called 12 times
+2026-02-03 16:40:16,436 INFO APIs.help_func.log: get_similar_items called 13 times
+2026-02-03 16:40:19,964 INFO APIs.help_func.log: get_similar_items called 14 times
+2026-02-03 16:40:23,448 INFO APIs.help_func.log: get_similar_items called 15 times
+2026-02-03 16:40:27,012 INFO APIs.help_func.log: get_similar_items called 16 times
+2026-02-03 16:40:30,547 INFO APIs.help_func.log: get_similar_items called 17 times
+2026-02-03 16:40:34,082 INFO APIs.help_func.log: get_similar_items called 18 times
+2026-02-03 16:40:37,606 INFO APIs.help_func.log: get_similar_items called 19 times
+2026-02-03 16:40:41,209 INFO APIs.help_func.log: get_similar_items called 20 times
+2026-02-03 16:40:44,710 INFO APIs.help_func.log: get_similar_items called 21 times
+2026-02-03 16:40:48,253 INFO APIs.help_func.log: get_similar_items called 22 times
+2026-02-03 16:40:51,997 INFO APIs.help_func.log: get_similar_items called 23 times
+2026-02-03 16:40:55,400 INFO APIs.help_func.log: get_similar_items called 24 times
+2026-02-03 16:40:59,087 INFO APIs.help_func.log: get_similar_items called 25 times
+2026-02-03 16:41:02,611 INFO APIs.help_func.log: get_similar_items called 26 times
+2026-02-03 16:41:06,169 INFO APIs.help_func.log: get_similar_items called 27 times
+2026-02-03 16:41:09,657 INFO APIs.help_func.log: get_similar_items called 28 times
+2026-02-03 16:41:13,160 INFO APIs.help_func.log: get_similar_items called 29 times
+2026-02-03 16:41:16,713 INFO APIs.help_func.log: get_similar_items called 30 times
+2026-02-03 16:41:20,264 INFO APIs.help_func.log: get_similar_items called 31 times
+2026-02-03 16:41:23,778 INFO APIs.help_func.log: get_similar_items called 32 times
+2026-02-03 16:41:27,254 INFO APIs.help_func.log: get_similar_items called 33 times
+2026-02-03 16:41:30,772 INFO APIs.help_func.log: get_similar_items called 34 times
+2026-02-03 16:41:34,271 INFO APIs.help_func.log: get_similar_items called 35 times
+2026-02-03 16:41:37,856 INFO APIs.help_func.log: get_similar_items called 36 times
+2026-02-03 16:41:41,444 INFO APIs.help_func.log: get_similar_items called 37 times
+2026-02-03 16:41:44,989 INFO APIs.help_func.log: get_similar_items called 38 times
+2026-02-03 16:41:48,500 INFO APIs.help_func.log: get_similar_items called 39 times
+2026-02-03 16:41:52,065 INFO APIs.help_func.log: get_similar_items called 40 times
+2026-02-03 16:41:55,519 INFO APIs.help_func.log: get_similar_items called 41 times
+2026-02-03 16:41:58,957 INFO APIs.help_func.log: get_similar_items called 42 times
+2026-02-03 16:42:02,370 INFO APIs.help_func.log: get_similar_items called 43 times
+2026-02-03 16:42:05,877 INFO APIs.help_func.log: get_similar_items called 44 times
+2026-02-03 16:42:09,291 INFO APIs.help_func.log: get_similar_items called 45 times
+2026-02-03 16:42:12,746 INFO APIs.help_func.log: get_similar_items called 46 times
+2026-02-03 16:42:16,353 INFO APIs.help_func.log: get_similar_items called 47 times
+2026-02-03 16:42:19,873 INFO APIs.help_func.log: get_similar_items called 48 times
+2026-02-03 16:42:23,447 INFO APIs.help_func.log: get_similar_items called 49 times
+2026-02-03 16:42:26,966 INFO APIs.help_func.log: get_similar_items called 50 times
+2026-02-03 16:42:30,613 INFO APIs.help_func.log: get_similar_items called 51 times
+2026-02-03 16:42:34,152 INFO APIs.help_func.log: get_similar_items called 52 times
+2026-02-03 16:42:37,729 INFO APIs.help_func.log: get_similar_items called 53 times
+2026-02-03 16:42:41,251 INFO APIs.help_func.log: get_similar_items called 54 times
+2026-02-03 16:42:44,826 INFO APIs.help_func.log: get_similar_items called 55 times
+2026-02-03 16:42:48,434 INFO APIs.help_func.log: get_similar_items called 56 times
+2026-02-03 16:42:51,973 INFO APIs.help_func.log: get_similar_items called 57 times
+2026-02-03 16:42:55,688 INFO APIs.help_func.log: get_similar_items called 58 times
+2026-02-03 16:42:59,155 INFO APIs.help_func.log: get_similar_items called 59 times
+2026-02-03 16:43:02,657 INFO APIs.help_func.log: get_similar_items called 60 times
+2026-02-03 16:43:06,296 INFO APIs.help_func.log: get_similar_items called 61 times
+2026-02-03 16:43:09,902 INFO APIs.help_func.log: get_similar_items called 62 times
+2026-02-03 16:43:13,489 INFO APIs.help_func.log: get_similar_items called 63 times
+2026-02-03 16:43:17,173 INFO APIs.help_func.log: get_similar_items called 64 times
+2026-02-03 16:43:20,736 INFO APIs.help_func.log: get_similar_items called 65 times
+2026-02-03 16:43:24,302 INFO APIs.help_func.log: get_similar_items called 66 times
+2026-02-03 16:43:27,949 INFO APIs.help_func.log: get_similar_items called 67 times
+2026-02-03 16:43:31,481 INFO APIs.help_func.log: get_similar_items called 68 times
+2026-02-03 16:43:35,172 INFO APIs.help_func.log: get_similar_items called 69 times
+2026-02-03 16:43:38,924 INFO APIs.help_func.log: get_similar_items called 70 times
+2026-02-03 16:43:42,443 INFO APIs.help_func.log: get_similar_items called 71 times
+2026-02-03 16:43:46,022 INFO APIs.help_func.log: get_similar_items called 72 times
+2026-02-03 16:43:49,927 INFO APIs.help_func.log: get_similar_items called 73 times
+2026-02-03 16:43:53,469 INFO APIs.help_func.log: get_similar_items called 74 times
+2026-02-03 16:43:57,042 INFO APIs.help_func.log: get_similar_items called 75 times
+2026-02-03 16:44:00,571 INFO APIs.help_func.log: get_similar_items called 76 times
+2026-02-03 16:44:03,979 INFO APIs.help_func.log: get_similar_items called 77 times
+2026-02-03 16:44:07,597 INFO APIs.help_func.log: get_similar_items called 78 times
+2026-02-03 16:44:11,127 INFO APIs.help_func.log: get_similar_items called 79 times
+2026-02-03 16:44:14,685 INFO APIs.help_func.log: get_similar_items called 80 times
+2026-02-03 16:44:18,308 INFO APIs.help_func.log: get_similar_items called 81 times
+2026-02-03 16:44:21,971 INFO APIs.help_func.log: get_similar_items called 82 times
+2026-02-03 16:44:25,524 INFO APIs.help_func.log: get_similar_items called 83 times
+2026-02-03 16:44:28,970 INFO APIs.help_func.log: get_similar_items called 84 times
+2026-02-03 16:44:32,480 INFO APIs.help_func.log: get_similar_items called 85 times
+2026-02-03 16:44:36,002 INFO APIs.help_func.log: get_similar_items called 86 times
+2026-02-03 16:44:39,458 INFO APIs.help_func.log: get_similar_items called 87 times
+2026-02-03 16:44:43,050 INFO APIs.help_func.log: get_similar_items called 88 times
+2026-02-03 16:44:46,629 INFO APIs.help_func.log: get_similar_items called 89 times
+2026-02-03 16:44:50,672 INFO APIs.help_func.log: get_avg_price_similar_items called 1 times
+2026-02-03 16:44:50,672 INFO APIs.help_func.log: get_sim_hist called 1 times
+2026-02-03 16:55:02,165 INFO APIs.help_func.log: csf, 0
+2026-02-03 16:55:02,210 INFO APIs.help_func.log: steam work 0, remained: 332
+2026-02-03 16:55:03,067 INFO APIs.help_func.log: csf_items func have this data 429
+2026-02-03 16:55:03,072 INFO APIs.help_func.log: get_data_skins: 1.227867s
+2026-02-03 16:55:03,073 INFO APIs.help_func.log: get_data_skins called 1 times
+2026-02-03 16:55:03,957 INFO APIs.help_func.log: I wil sleep 1h -- 429
+2026-02-03 16:55:13,437 INFO APIs.help_func.log: steam work 50, remained: 332
+2026-02-03 16:55:21,561 INFO APIs.help_func.log: steam work 100, remained: 332
+2026-02-03 16:55:33,348 INFO APIs.help_func.log: steam, 140, count: 0, result: []
+2026-02-03 16:55:40,121 INFO APIs.help_func.log: steam work 150, remained: 332
+2026-02-03 16:55:40,869 INFO APIs.help_func.log: steam, 160, count: 0, result: []
+2026-02-03 16:55:41,150 INFO APIs.help_func.log: steam, 160, count: 0, result: []
+2026-02-03 16:55:56,398 INFO APIs.help_func.log: steam, 200, count: 0, result: []
+2026-02-03 16:55:59,357 INFO APIs.help_func.log: steam work 200, remained: 332
+2026-02-03 16:56:00,274 INFO APIs.help_func.log: steam, 210, count: 0, result: []
+2026-02-03 16:56:00,523 INFO APIs.help_func.log: steam, 210, count: 0, result: []
+2026-02-03 16:56:00,770 INFO APIs.help_func.log: steam, 210, count: 0, result: []
+2026-02-03 16:56:01,025 INFO APIs.help_func.log: steam, 210, count: 0, result: []
+2026-02-03 16:56:01,408 INFO APIs.help_func.log: steam, 210, count: 0, result: []
+2026-02-03 16:56:07,565 INFO APIs.help_func.log: steam, 220, count: 0, result: []
+2026-02-03 16:56:07,811 INFO APIs.help_func.log: steam, 220, count: 0, result: []
+2026-02-03 16:56:23,217 INFO APIs.help_func.log: steam work 250, remained: 332
+2026-02-03 16:56:33,968 INFO APIs.help_func.log: steam, 280, count: 0, result: []
+2026-02-03 16:56:37,323 INFO APIs.help_func.log: steam, 290, count: 0, result: []
+2026-02-03 16:56:37,562 INFO APIs.help_func.log: steam, 290, count: 0, result: []
+2026-02-03 16:56:41,206 INFO APIs.help_func.log: steam, 300, count: 0, result: []
+2026-02-03 16:56:41,443 INFO APIs.help_func.log: steam, 300, count: 0, result: []
+2026-02-03 16:56:48,376 INFO APIs.help_func.log: steam work 300, remained: 332
+2026-02-03 16:56:49,132 INFO APIs.help_func.log: steam, 310, count: 0, result: []
+2026-02-03 16:56:49,439 INFO APIs.help_func.log: steam, 310, count: 0, result: []
+2026-02-03 16:56:49,854 INFO APIs.help_func.log: steam, 310, count: 0, result: []
+2026-02-03 16:56:50,259 INFO APIs.help_func.log: steam, 310, count: 0, result: []
+2026-02-03 16:56:56,593 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:56:56,843 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:56:57,087 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:56:57,316 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:56:57,561 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:56:57,810 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:56:58,058 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:56:58,300 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:56:58,553 INFO APIs.help_func.log: steam, 320, count: 0, result: []
+2026-02-03 16:57:06,784 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 16:57:07,085 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 16:57:09,623 INFO APIs.help_func.log: get_data: 127.773346s
+2026-02-03 16:57:09,623 INFO APIs.help_func.log: get_data called 1 times
+2026-02-03 21:36:24,554 INFO APIs.help_func.log: csf, 0
+2026-02-03 21:36:24,581 INFO APIs.help_func.log: steam work 0, remained: 342
+2026-02-03 21:36:26,932 INFO APIs.help_func.log: steam, 30, count: 0, result: []
+2026-02-03 21:36:34,459 INFO APIs.help_func.log: csf, 10
+2026-02-03 21:36:37,968 INFO APIs.help_func.log: steam work 50, remained: 342
+2026-02-03 21:36:43,338 INFO APIs.help_func.log: steam, 70, count: 0, result: []
+2026-02-03 21:36:46,473 INFO APIs.help_func.log: csf, 20
+2026-02-03 21:36:51,427 INFO APIs.help_func.log: steam, 90, count: 0, result: []
+2026-02-03 21:36:52,436 INFO APIs.help_func.log: steam, 90, count: 0, result: []
+2026-02-03 21:36:56,812 INFO APIs.help_func.log: steam, 100, count: 0, result: []
+2026-02-03 21:36:57,472 INFO APIs.help_func.log: steam, 100, count: 0, result: []
+2026-02-03 21:36:57,548 INFO APIs.help_func.log: csf, 30
+2026-02-03 21:37:02,565 INFO APIs.help_func.log: steam work 100, remained: 342
+2026-02-03 21:37:03,461 INFO APIs.help_func.log: steam, 110, count: 0, result: []
+2026-02-03 21:37:03,825 INFO APIs.help_func.log: steam, 110, count: 0, result: []
+2026-02-03 21:37:04,351 INFO APIs.help_func.log: steam, 110, count: 0, result: []
+2026-02-03 21:37:08,851 INFO APIs.help_func.log: csf, 40
+2026-02-03 21:37:13,741 INFO APIs.help_func.log: get_data_skins: 49.552684s
+2026-02-03 21:37:13,741 INFO APIs.help_func.log: get_data_skins called 1 times
+2026-02-03 21:37:14,513 INFO APIs.help_func.log: get_items_csfloat: 50.324858s
+2026-02-03 21:37:20,733 INFO APIs.help_func.log: steam, 150, count: 0, result: []
+2026-02-03 21:37:22,716 INFO APIs.help_func.log: steam, 150, count: 0, result: []
+2026-02-03 21:37:23,702 INFO APIs.help_func.log: steam, 150, count: 0, result: []
+2026-02-03 21:37:24,735 INFO APIs.help_func.log: steam, 150, count: 0, result: []
+2026-02-03 21:37:25,829 INFO APIs.help_func.log: steam, 150, count: 0, result: []
+2026-02-03 21:37:31,792 INFO APIs.help_func.log: steam work 150, remained: 342
+2026-02-03 21:37:42,510 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 21:37:48,019 INFO APIs.help_func.log: steam, 190, count: 0, result: []
+2026-02-03 21:37:59,480 INFO APIs.help_func.log: steam work 200, remained: 342
+2026-02-03 21:38:04,451 INFO APIs.help_func.log: steam, 220, count: 0, result: []
+2026-02-03 21:38:14,361 INFO APIs.help_func.log: steam, 240, count: 0, result: []
+2026-02-03 21:38:20,317 INFO APIs.help_func.log: steam work 250, remained: 342
+2026-02-03 21:38:35,270 INFO APIs.help_func.log: steam, 270, count: 0, result: []
+2026-02-03 21:38:55,339 INFO APIs.help_func.log: steam work 300, remained: 342
+2026-02-03 21:38:56,164 INFO APIs.help_func.log: steam, 310, count: 0, result: []
+2026-02-03 21:39:06,256 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 21:39:10,058 INFO APIs.help_func.log: steam, 350, count: 0, result: []
+2026-02-03 21:39:13,762 INFO APIs.help_func.log: get_data: 169.566146s
+2026-02-03 21:39:13,763 INFO APIs.help_func.log: get_data called 1 times
+2026-02-03 21:39:15,638 INFO APIs.help_func.log: get_items_from_bd called 1 times
+2026-02-03 21:39:16,603 INFO APIs.help_func.log: get_avg_price_similar_items called 1 times
+2026-02-03 21:39:16,604 INFO APIs.help_func.log: get_sim_hist called 1 times
+2026-02-03 21:48:39,407 INFO APIs.help_func.log: steam work 0, remained: 342
+2026-02-03 21:48:39,417 INFO APIs.help_func.log: csf, 0
+2026-02-03 21:48:40,201 INFO APIs.help_func.log: steam, 10, count: 0, result: []
+2026-02-03 21:48:49,763 INFO APIs.help_func.log: csf, 10
+2026-02-03 21:48:56,277 INFO APIs.help_func.log: steam work 50, remained: 342
+2026-02-03 21:49:00,796 INFO APIs.help_func.log: csf, 20
+2026-02-03 21:49:12,172 INFO APIs.help_func.log: csf, 30
+2026-02-03 21:49:16,907 INFO APIs.help_func.log: steam work 100, remained: 342
+2026-02-03 21:49:17,672 INFO APIs.help_func.log: steam, 110, count: 0, result: []
+2026-02-03 21:49:22,790 INFO APIs.help_func.log: csf, 40
+2026-02-03 21:49:26,826 INFO APIs.help_func.log: get_data_skins: 47.819985s
+2026-02-03 21:49:26,826 INFO APIs.help_func.log: get_data_skins called 1 times
+2026-02-03 21:49:28,156 INFO APIs.help_func.log: get_items_csfloat: 49.150702s
+2026-02-03 21:49:31,944 INFO APIs.help_func.log: steam, 150, count: 0, result: []
+2026-02-03 21:49:32,221 INFO APIs.help_func.log: steam, 150, count: 0, result: []
+2026-02-03 21:49:36,894 INFO APIs.help_func.log: steam work 150, remained: 342
+2026-02-03 21:49:56,560 INFO APIs.help_func.log: steam work 200, remained: 342
+2026-02-03 21:50:07,652 INFO APIs.help_func.log: steam work 250, remained: 342
+2026-02-03 21:50:23,211 INFO APIs.help_func.log: steam work 300, remained: 342
+2026-02-03 21:50:41,626 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 21:50:49,618 INFO APIs.help_func.log: get_data: 130.604861s
+2026-02-03 21:50:49,618 INFO APIs.help_func.log: get_data called 1 times
+2026-02-03 21:50:51,737 INFO APIs.help_func.log: get_items_from_bd called 1 times
+2026-02-03 21:50:52,876 INFO APIs.help_func.log: get_avg_price_similar_items called 1 times
+2026-02-03 21:50:52,877 INFO APIs.help_func.log: get_sim_hist called 1 times
+2026-02-03 21:58:40,629 INFO APIs.help_func.log: csf, 0
+2026-02-03 21:58:40,712 INFO APIs.help_func.log: steam work 0, remained: 332
+2026-02-03 21:58:47,755 INFO APIs.help_func.log: steam, 20, count: 0, result: []
+2026-02-03 21:58:52,013 INFO APIs.help_func.log: csf, 10
+2026-02-03 21:58:59,615 INFO APIs.help_func.log: steam work 50, remained: 332
+2026-02-03 21:59:02,215 INFO APIs.help_func.log: csf, 20
+2026-02-03 21:59:07,556 INFO APIs.help_func.log: steam, 80, count: 0, result: []
+2026-02-03 21:59:07,812 INFO APIs.help_func.log: steam, 80, count: 0, result: []
+2026-02-03 21:59:13,057 INFO APIs.help_func.log: csf, 30
+2026-02-03 21:59:16,615 INFO APIs.help_func.log: steam work 100, remained: 332
+2026-02-03 21:59:23,055 INFO APIs.help_func.log: csf, 40
+2026-02-03 21:59:23,123 INFO APIs.help_func.log: get_data_skins: 42.904953s
+2026-02-03 21:59:23,124 INFO APIs.help_func.log: get_data_skins called 1 times
+2026-02-03 21:59:23,994 INFO APIs.help_func.log: get_items_csfloat: 43.775535s
+2026-02-03 21:59:30,375 INFO APIs.help_func.log: steam, 140, count: 0, result: []
+2026-02-03 21:59:37,743 INFO APIs.help_func.log: steam work 150, remained: 332
+2026-02-03 21:59:51,700 INFO APIs.help_func.log: steam work 200, remained: 332
+2026-02-03 22:00:08,181 INFO APIs.help_func.log: steam work 250, remained: 332
+2026-02-03 22:00:22,560 INFO APIs.help_func.log: steam work 300, remained: 332
+2026-02-03 22:00:33,958 INFO APIs.help_func.log: get_data: 113.734020s
+2026-02-03 22:00:33,959 INFO APIs.help_func.log: get_data called 1 times
+2026-02-03 22:00:35,461 INFO APIs.help_func.log: get_items_from_bd called 1 times
+2026-02-03 22:00:35,786 INFO APIs.help_func.log: get_similar_items called 1 times
+2026-02-03 22:00:36,928 INFO APIs.help_func.log: get_similar_items called 2 times
+2026-02-03 22:00:38,122 INFO APIs.help_func.log: get_similar_items called 3 times
+2026-02-03 22:00:39,012 INFO APIs.help_func.log: get_similar_items called 4 times
+2026-02-03 22:00:39,713 INFO APIs.help_func.log: get_similar_items called 5 times
+2026-02-03 22:00:40,425 INFO APIs.help_func.log: get_similar_items called 6 times
+2026-02-03 22:00:41,139 INFO APIs.help_func.log: get_similar_items called 7 times
+2026-02-03 22:00:41,913 INFO APIs.help_func.log: get_similar_items called 8 times
+2026-02-03 22:00:42,586 INFO APIs.help_func.log: get_similar_items called 9 times
+2026-02-03 22:00:43,229 INFO APIs.help_func.log: get_similar_items called 10 times
+2026-02-03 22:00:43,928 INFO APIs.help_func.log: get_similar_items called 11 times
+2026-02-03 22:00:44,635 INFO APIs.help_func.log: get_similar_items called 12 times
+2026-02-03 22:00:45,368 INFO APIs.help_func.log: get_similar_items called 13 times
+2026-02-03 22:00:46,051 INFO APIs.help_func.log: get_similar_items called 14 times
+2026-02-03 22:00:47,019 INFO APIs.help_func.log: get_similar_items called 15 times
+2026-02-03 22:00:47,848 INFO APIs.help_func.log: get_similar_items called 16 times
+2026-02-03 22:00:48,622 INFO APIs.help_func.log: get_similar_items called 17 times
+2026-02-03 22:00:49,430 INFO APIs.help_func.log: get_similar_items called 18 times
+2026-02-03 22:00:50,237 INFO APIs.help_func.log: get_similar_items called 19 times
+2026-02-03 22:00:50,961 INFO APIs.help_func.log: get_similar_items called 20 times
+2026-02-03 22:00:51,695 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:51,696 INFO APIs.help_func.log: get_similar_items called 21 times
+2026-02-03 22:00:52,472 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:52,473 INFO APIs.help_func.log: get_similar_items called 22 times
+2026-02-03 22:00:53,781 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:53,782 INFO APIs.help_func.log: get_similar_items called 23 times
+2026-02-03 22:00:54,784 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:54,785 INFO APIs.help_func.log: get_similar_items called 24 times
+2026-02-03 22:00:55,569 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:55,570 INFO APIs.help_func.log: get_similar_items called 25 times
+2026-02-03 22:00:56,285 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:56,286 INFO APIs.help_func.log: get_similar_items called 26 times
+2026-02-03 22:00:57,036 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:57,037 INFO APIs.help_func.log: get_similar_items called 27 times
+2026-02-03 22:00:57,827 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:57,828 INFO APIs.help_func.log: get_similar_items called 28 times
+2026-02-03 22:00:58,512 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:58,513 INFO APIs.help_func.log: get_similar_items called 29 times
+2026-02-03 22:00:59,207 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:59,208 INFO APIs.help_func.log: get_similar_items called 30 times
+2026-02-03 22:00:59,923 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:00:59,924 INFO APIs.help_func.log: get_similar_items called 31 times
+2026-02-03 22:01:00,656 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:00,657 INFO APIs.help_func.log: get_similar_items called 32 times
+2026-02-03 22:01:01,663 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:01,663 INFO APIs.help_func.log: get_similar_items called 33 times
+2026-02-03 22:01:02,388 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:02,390 INFO APIs.help_func.log: get_similar_items called 34 times
+2026-02-03 22:01:03,066 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:03,067 INFO APIs.help_func.log: get_similar_items called 35 times
+2026-02-03 22:01:03,824 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:03,825 INFO APIs.help_func.log: get_similar_items called 36 times
+2026-02-03 22:01:04,538 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:04,539 INFO APIs.help_func.log: get_similar_items called 37 times
+2026-02-03 22:01:05,328 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:05,329 INFO APIs.help_func.log: get_similar_items called 38 times
+2026-02-03 22:01:06,185 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:06,187 INFO APIs.help_func.log: get_similar_items called 39 times
+2026-02-03 22:01:06,904 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:06,905 INFO APIs.help_func.log: get_similar_items called 40 times
+2026-02-03 22:01:07,602 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:07,603 INFO APIs.help_func.log: get_similar_items called 41 times
+2026-02-03 22:01:08,310 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:08,311 INFO APIs.help_func.log: get_similar_items called 42 times
+2026-02-03 22:01:09,043 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:09,044 INFO APIs.help_func.log: get_similar_items called 43 times
+2026-02-03 22:01:09,701 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:09,702 INFO APIs.help_func.log: get_similar_items called 44 times
+2026-02-03 22:01:10,471 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:10,473 INFO APIs.help_func.log: get_similar_items called 45 times
+2026-02-03 22:01:11,214 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:11,215 INFO APIs.help_func.log: get_similar_items called 46 times
+2026-02-03 22:01:11,996 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:11,996 INFO APIs.help_func.log: get_similar_items called 47 times
+2026-02-03 22:01:12,650 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:12,651 INFO APIs.help_func.log: get_similar_items called 48 times
+2026-02-03 22:01:13,327 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:13,328 INFO APIs.help_func.log: get_similar_items called 49 times
+2026-02-03 22:01:13,993 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:13,993 INFO APIs.help_func.log: get_similar_items called 50 times
+2026-02-03 22:01:14,702 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:14,703 INFO APIs.help_func.log: get_similar_items called 51 times
+2026-02-03 22:01:15,381 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:15,382 INFO APIs.help_func.log: get_similar_items called 52 times
+2026-02-03 22:01:16,137 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:16,137 INFO APIs.help_func.log: get_similar_items called 53 times
+2026-02-03 22:01:16,853 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:16,855 INFO APIs.help_func.log: get_similar_items called 54 times
+2026-02-03 22:01:17,605 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:17,607 INFO APIs.help_func.log: get_similar_items called 55 times
+2026-02-03 22:01:18,342 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:18,343 INFO APIs.help_func.log: get_similar_items called 56 times
+2026-02-03 22:01:18,975 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:18,976 INFO APIs.help_func.log: get_similar_items called 57 times
+2026-02-03 22:01:19,720 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:19,721 INFO APIs.help_func.log: get_similar_items called 58 times
+2026-02-03 22:01:20,401 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:20,402 INFO APIs.help_func.log: get_similar_items called 59 times
+2026-02-03 22:01:21,150 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:21,150 INFO APIs.help_func.log: get_similar_items called 60 times
+2026-02-03 22:01:21,828 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:21,829 INFO APIs.help_func.log: get_similar_items called 61 times
+2026-02-03 22:01:22,542 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:22,545 INFO APIs.help_func.log: get_similar_items called 62 times
+2026-02-03 22:01:23,331 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:23,332 INFO APIs.help_func.log: get_similar_items called 63 times
+2026-02-03 22:01:24,200 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:24,201 INFO APIs.help_func.log: get_similar_items called 64 times
+2026-02-03 22:01:25,098 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:25,099 INFO APIs.help_func.log: get_similar_items called 65 times
+2026-02-03 22:01:25,922 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:25,923 INFO APIs.help_func.log: get_similar_items called 66 times
+2026-02-03 22:01:26,604 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:26,605 INFO APIs.help_func.log: get_similar_items called 67 times
+2026-02-03 22:01:27,321 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:27,322 INFO APIs.help_func.log: get_similar_items called 68 times
+2026-02-03 22:01:27,988 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:27,989 INFO APIs.help_func.log: get_similar_items called 69 times
+2026-02-03 22:01:28,689 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:28,690 INFO APIs.help_func.log: get_similar_items called 70 times
+2026-02-03 22:01:29,394 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:29,395 INFO APIs.help_func.log: get_similar_items called 71 times
+2026-02-03 22:01:30,084 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:30,085 INFO APIs.help_func.log: get_similar_items called 72 times
+2026-02-03 22:01:30,872 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:30,873 INFO APIs.help_func.log: get_similar_items called 73 times
+2026-02-03 22:01:31,654 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:31,654 INFO APIs.help_func.log: get_similar_items called 74 times
+2026-02-03 22:01:32,632 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:32,633 INFO APIs.help_func.log: get_similar_items called 75 times
+2026-02-03 22:01:33,333 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:33,333 INFO APIs.help_func.log: get_similar_items called 76 times
+2026-02-03 22:01:34,031 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:34,032 INFO APIs.help_func.log: get_similar_items called 77 times
+2026-02-03 22:01:34,822 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:34,823 INFO APIs.help_func.log: get_similar_items called 78 times
+2026-02-03 22:01:35,543 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:35,543 INFO APIs.help_func.log: get_similar_items called 79 times
+2026-02-03 22:01:36,281 INFO APIs.help_func.log: get_similar_items called 80 times
+2026-02-03 22:01:37,015 INFO APIs.help_func.log: get_similar_items called 81 times
+2026-02-03 22:01:37,721 INFO APIs.help_func.log: get_similar_items called 82 times
+2026-02-03 22:01:38,452 INFO APIs.help_func.log: get_similar_items called 83 times
+2026-02-03 22:01:39,176 INFO APIs.help_func.log: get_similar_items called 84 times
+2026-02-03 22:01:39,872 INFO APIs.help_func.log: get_similar_items called 85 times
+2026-02-03 22:01:40,696 INFO APIs.help_func.log: get_similar_items called 86 times
+2026-02-03 22:01:41,473 INFO APIs.help_func.log: get_similar_items called 87 times
+2026-02-03 22:01:42,202 INFO APIs.help_func.log: get_similar_items called 88 times
+2026-02-03 22:01:42,943 INFO APIs.help_func.log: get_similar_items called 89 times
+2026-02-03 22:01:43,808 INFO APIs.help_func.log: get_similar_items called 90 times
+2026-02-03 22:01:44,541 INFO APIs.help_func.log: get_similar_items called 91 times
+2026-02-03 22:01:45,280 INFO APIs.help_func.log: get_similar_items called 92 times
+2026-02-03 22:01:46,066 INFO APIs.help_func.log: get_similar_items called 93 times
+2026-02-03 22:01:46,922 INFO APIs.help_func.log: get_similar_items called 94 times
+2026-02-03 22:01:47,649 INFO APIs.help_func.log: get_similar_items called 95 times
+2026-02-03 22:01:48,372 INFO APIs.help_func.log: get_similar_items called 96 times
+2026-02-03 22:01:49,517 INFO APIs.help_func.log: get_similar_items called 97 times
+2026-02-03 22:01:50,367 INFO APIs.help_func.log: get_similar_items called 98 times
+2026-02-03 22:01:51,259 INFO APIs.help_func.log: get_similar_items called 99 times
+2026-02-03 22:01:51,987 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:51,988 INFO APIs.help_func.log: get_similar_items called 100 times
+2026-02-03 22:01:52,772 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:52,773 INFO APIs.help_func.log: get_similar_items called 101 times
+2026-02-03 22:01:53,511 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:53,512 INFO APIs.help_func.log: get_similar_items called 102 times
+2026-02-03 22:01:54,224 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:54,225 INFO APIs.help_func.log: get_similar_items called 103 times
+2026-02-03 22:01:54,919 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:54,921 INFO APIs.help_func.log: get_similar_items called 104 times
+2026-02-03 22:01:55,755 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:55,756 INFO APIs.help_func.log: get_similar_items called 105 times
+2026-02-03 22:01:56,524 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:56,525 INFO APIs.help_func.log: get_similar_items called 106 times
+2026-02-03 22:01:57,246 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:57,247 INFO APIs.help_func.log: get_similar_items called 107 times
+2026-02-03 22:01:57,986 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 22:01:57,987 INFO APIs.help_func.log: get_similar_items called 108 times
+2026-02-03 22:01:58,789 INFO APIs.help_func.log: get_avg_price_similar_items called 1 times
+2026-02-03 22:01:58,789 INFO APIs.help_func.log: get_sim_hist called 1 times
+2026-02-03 22:57:48,328 INFO APIs.help_func.log: csf, 0
+2026-02-03 22:57:48,332 INFO APIs.help_func.log: steam work 0, remained: 342
+2026-02-03 22:57:49,148 INFO APIs.help_func.log: steam, 10, count: 0, result: []
+2026-02-03 22:57:49,423 INFO APIs.help_func.log: steam, 10, count: 0, result: []
+2026-02-03 22:57:49,737 INFO APIs.help_func.log: steam, 10, count: 0, result: []
+2026-02-03 22:57:50,086 INFO APIs.help_func.log: steam, 10, count: 0, result: []
+2026-02-03 22:57:50,419 INFO APIs.help_func.log: steam, 10, count: 0, result: []
+2026-02-03 22:57:50,744 INFO APIs.help_func.log: steam, 10, count: 0, result: []
+2026-02-03 22:57:51,017 INFO APIs.help_func.log: steam, 10, count: 0, result: []
+2026-02-03 22:57:58,492 INFO APIs.help_func.log: csf, 10
+2026-02-03 22:58:03,510 INFO APIs.help_func.log: steam, 50, count: 0, result: []
+2026-02-03 22:58:08,612 INFO APIs.help_func.log: steam work 50, remained: 342
+2026-02-03 22:58:09,437 INFO APIs.help_func.log: steam, 60, count: 0, result: []
+2026-02-03 22:58:09,468 INFO APIs.help_func.log: csf, 20
+2026-02-03 22:58:15,545 INFO APIs.help_func.log: steam, 80, count: 0, result: []
+2026-02-03 22:58:19,673 INFO APIs.help_func.log: csf, 30
+2026-02-03 22:58:27,237 INFO APIs.help_func.log: steam work 100, remained: 342
+2026-02-03 22:58:28,230 INFO APIs.help_func.log: steam, 110, count: 0, result: []
+2026-02-03 22:58:28,472 INFO APIs.help_func.log: steam, 110, count: 0, result: []
+2026-02-03 22:58:29,743 INFO APIs.help_func.log: csf, 40
+2026-02-03 22:58:33,711 INFO APIs.help_func.log: get_data_skins: 45.865828s
+2026-02-03 22:58:33,711 INFO APIs.help_func.log: get_data_skins called 1 times
+2026-02-03 22:58:34,162 INFO APIs.help_func.log: get_items_csfloat: 46.316887s
+2026-02-03 22:58:38,484 INFO APIs.help_func.log: steam, 140, count: 0, result: []
+2026-02-03 22:58:38,753 INFO APIs.help_func.log: steam, 140, count: 0, result: []
+2026-02-03 22:58:48,710 INFO APIs.help_func.log: steam work 150, remained: 342
+2026-02-03 22:58:58,798 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:58:59,211 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:58:59,741 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:59:00,014 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:59:00,264 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:59:00,569 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:59:00,953 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:59:01,264 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:59:01,564 INFO APIs.help_func.log: steam, 180, count: 0, result: []
+2026-02-03 22:59:05,160 INFO APIs.help_func.log: steam, 190, count: 0, result: []
+2026-02-03 22:59:11,541 INFO APIs.help_func.log: steam, 200, count: 0, result: []
+2026-02-03 22:59:15,128 INFO APIs.help_func.log: steam work 200, remained: 342
+2026-02-03 22:59:19,776 INFO APIs.help_func.log: steam, 220, count: 0, result: []
+2026-02-03 22:59:20,220 INFO APIs.help_func.log: steam, 220, count: 0, result: []
+2026-02-03 22:59:20,534 INFO APIs.help_func.log: steam, 220, count: 0, result: []
+2026-02-03 22:59:39,526 INFO APIs.help_func.log: steam work 250, remained: 342
+2026-02-03 22:59:40,411 INFO APIs.help_func.log: steam, 260, count: 0, result: []
+2026-02-03 23:00:04,321 INFO APIs.help_func.log: steam work 300, remained: 342
+2026-02-03 23:00:16,905 INFO APIs.help_func.log: get_data: 149.044407s
+2026-02-03 23:00:16,906 INFO APIs.help_func.log: get_data called 1 times
+2026-02-03 23:00:18,132 INFO APIs.help_func.log: get_items_from_bd called 1 times
+2026-02-03 23:00:18,721 INFO APIs.help_func.log: get_avg_price_similar_items called 1 times
+2026-02-03 23:00:18,721 INFO APIs.help_func.log: get_sim_hist called 1 times
+2026-02-03 23:05:33,827 INFO APIs.help_func.log: get_data_skins: 0.071840s
+2026-02-03 23:05:33,827 INFO APIs.help_func.log: get_data_skins called 1 times
+2026-02-03 23:05:34,188 INFO APIs.help_func.log: steam work 0, remained: 342
+2026-02-03 23:05:34,710 INFO APIs.help_func.log: get_items_csfloat: 0.955650s
+2026-02-03 23:05:45,584 INFO APIs.help_func.log: steam work 50, remained: 342
+2026-02-03 23:06:01,576 INFO APIs.help_func.log: steam work 100, remained: 342
+2026-02-03 23:06:02,364 INFO APIs.help_func.log: steam, 110, count: 0, result: []
+2026-02-03 23:06:22,562 INFO APIs.help_func.log: steam work 150, remained: 342
+2026-02-03 23:06:37,116 INFO APIs.help_func.log: steam work 200, remained: 342
+2026-02-03 23:06:37,932 INFO APIs.help_func.log: steam, 210, count: 0, result: []
+2026-02-03 23:06:38,233 INFO APIs.help_func.log: steam, 210, count: 0, result: []
+2026-02-03 23:06:55,871 INFO APIs.help_func.log: steam work 250, remained: 342
+2026-02-03 23:07:00,798 INFO APIs.help_func.log: steam, 270, count: 0, result: []
+2026-02-03 23:07:04,128 INFO APIs.help_func.log: steam, 280, count: 0, result: []
+2026-02-03 23:07:13,710 INFO APIs.help_func.log: steam, 300, count: 0, result: []
+2026-02-03 23:07:13,969 INFO APIs.help_func.log: steam, 300, count: 0, result: []
+2026-02-03 23:07:14,247 INFO APIs.help_func.log: steam, 300, count: 0, result: []
+2026-02-03 23:07:14,522 INFO APIs.help_func.log: steam, 300, count: 0, result: []
+2026-02-03 23:07:16,959 INFO APIs.help_func.log: steam work 300, remained: 342
+2026-02-03 23:07:30,380 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 23:07:30,996 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 23:07:31,409 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 23:07:31,744 INFO APIs.help_func.log: steam, 340, count: 0, result: []
+2026-02-03 23:07:36,395 INFO APIs.help_func.log: steam, 350, count: 0, result: []
+2026-02-03 23:07:36,644 INFO APIs.help_func.log: steam, 350, count: 0, result: []
+2026-02-03 23:07:36,916 INFO APIs.help_func.log: steam, 350, count: 0, result: []
+2026-02-03 23:07:37,216 INFO APIs.help_func.log: steam, 350, count: 0, result: []
+2026-02-03 23:07:37,468 INFO APIs.help_func.log: steam, 350, count: 0, result: []
+2026-02-03 23:07:37,764 INFO APIs.help_func.log: steam, 350, count: 0, result: []
+2026-02-03 23:07:41,951 INFO APIs.help_func.log: get_data: 128.189860s
+2026-02-03 23:07:41,951 INFO APIs.help_func.log: get_data called 1 times
+2026-02-03 23:07:43,715 INFO APIs.help_func.log: get_items_from_bd called 1 times
+2026-02-03 23:07:44,140 INFO APIs.help_func.log: get_similar_items called 1 times
+2026-02-03 23:07:45,314 INFO APIs.help_func.log: get_similar_items called 2 times
+2026-02-03 23:07:46,560 INFO APIs.help_func.log: get_similar_items called 3 times
+2026-02-03 23:07:47,802 INFO APIs.help_func.log: get_similar_items called 4 times
+2026-02-03 23:07:49,003 INFO APIs.help_func.log: get_similar_items called 5 times
+2026-02-03 23:07:50,609 INFO APIs.help_func.log: get_similar_items called 6 times
+2026-02-03 23:07:52,586 INFO APIs.help_func.log: get_similar_items called 7 times
+2026-02-03 23:07:54,135 INFO APIs.help_func.log: get_similar_items called 8 times
+2026-02-03 23:07:55,659 INFO APIs.help_func.log: get_similar_items called 9 times
+2026-02-03 23:07:57,011 INFO APIs.help_func.log: get_similar_items called 10 times
+2026-02-03 23:07:58,314 INFO APIs.help_func.log: get_similar_items called 11 times
+2026-02-03 23:07:59,664 INFO APIs.help_func.log: get_similar_items called 12 times
+2026-02-03 23:08:00,786 INFO APIs.help_func.log: get_similar_items called 13 times
+2026-02-03 23:08:02,283 INFO APIs.help_func.log: get_similar_items called 14 times
+2026-02-03 23:08:03,431 INFO APIs.help_func.log: get_similar_items called 15 times
+2026-02-03 23:08:04,841 INFO APIs.help_func.log: get_similar_items called 16 times
+2026-02-03 23:08:06,086 INFO APIs.help_func.log: get_similar_items called 17 times
+2026-02-03 23:08:07,290 INFO APIs.help_func.log: get_similar_items called 18 times
+2026-02-03 23:08:08,438 INFO APIs.help_func.log: get_similar_items called 19 times
+2026-02-03 23:08:09,582 INFO APIs.help_func.log: get_similar_items called 20 times
+2026-02-03 23:08:10,954 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:10,956 INFO APIs.help_func.log: get_similar_items called 21 times
+2026-02-03 23:08:12,156 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:12,157 INFO APIs.help_func.log: get_similar_items called 22 times
+2026-02-03 23:08:13,415 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:13,417 INFO APIs.help_func.log: get_similar_items called 23 times
+2026-02-03 23:08:14,921 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:14,922 INFO APIs.help_func.log: get_similar_items called 24 times
+2026-02-03 23:08:15,999 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:16,000 INFO APIs.help_func.log: get_similar_items called 25 times
+2026-02-03 23:08:17,064 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:17,065 INFO APIs.help_func.log: get_similar_items called 26 times
+2026-02-03 23:08:18,063 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:18,065 INFO APIs.help_func.log: get_similar_items called 27 times
+2026-02-03 23:08:19,465 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:19,467 INFO APIs.help_func.log: get_similar_items called 28 times
+2026-02-03 23:08:20,585 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:20,587 INFO APIs.help_func.log: get_similar_items called 29 times
+2026-02-03 23:08:21,804 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:21,805 INFO APIs.help_func.log: get_similar_items called 30 times
+2026-02-03 23:08:22,973 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:22,974 INFO APIs.help_func.log: get_similar_items called 31 times
+2026-02-03 23:08:24,143 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:24,144 INFO APIs.help_func.log: get_similar_items called 32 times
+2026-02-03 23:08:25,272 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:25,274 INFO APIs.help_func.log: get_similar_items called 33 times
+2026-02-03 23:08:26,318 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:26,319 INFO APIs.help_func.log: get_similar_items called 34 times
+2026-02-03 23:08:27,378 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:27,380 INFO APIs.help_func.log: get_similar_items called 35 times
+2026-02-03 23:08:28,456 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:28,457 INFO APIs.help_func.log: get_similar_items called 36 times
+2026-02-03 23:08:29,510 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:29,511 INFO APIs.help_func.log: get_similar_items called 37 times
+2026-02-03 23:08:30,671 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:30,672 INFO APIs.help_func.log: get_similar_items called 38 times
+2026-02-03 23:08:31,757 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:31,759 INFO APIs.help_func.log: get_similar_items called 39 times
+2026-02-03 23:08:32,910 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:32,911 INFO APIs.help_func.log: get_similar_items called 40 times
+2026-02-03 23:08:34,025 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:34,026 INFO APIs.help_func.log: get_similar_items called 41 times
+2026-02-03 23:08:35,081 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:35,083 INFO APIs.help_func.log: get_similar_items called 42 times
+2026-02-03 23:08:36,124 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:36,125 INFO APIs.help_func.log: get_similar_items called 43 times
+2026-02-03 23:08:37,122 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:37,123 INFO APIs.help_func.log: get_similar_items called 44 times
+2026-02-03 23:08:38,387 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:38,389 INFO APIs.help_func.log: get_similar_items called 45 times
+2026-02-03 23:08:39,587 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:39,588 INFO APIs.help_func.log: get_similar_items called 46 times
+2026-02-03 23:08:40,748 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:40,750 INFO APIs.help_func.log: get_similar_items called 47 times
+2026-02-03 23:08:41,935 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:41,938 INFO APIs.help_func.log: get_similar_items called 48 times
+2026-02-03 23:08:43,106 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:08:43,107 INFO APIs.help_func.log: get_similar_items called 49 times
+2026-02-03 23:08:44,298 INFO APIs.help_func.log: get_similar_items called 50 times
+2026-02-03 23:08:45,684 INFO APIs.help_func.log: get_similar_items called 51 times
+2026-02-03 23:08:46,873 INFO APIs.help_func.log: get_similar_items called 52 times
+2026-02-03 23:08:48,190 INFO APIs.help_func.log: get_similar_items called 53 times
+2026-02-03 23:08:49,197 INFO APIs.help_func.log: get_similar_items called 54 times
+2026-02-03 23:08:50,753 INFO APIs.help_func.log: get_similar_items called 55 times
+2026-02-03 23:08:51,907 INFO APIs.help_func.log: get_similar_items called 56 times
+2026-02-03 23:08:53,174 INFO APIs.help_func.log: get_similar_items called 57 times
+2026-02-03 23:08:54,317 INFO APIs.help_func.log: get_similar_items called 58 times
+2026-02-03 23:08:55,510 INFO APIs.help_func.log: get_similar_items called 59 times
+2026-02-03 23:08:57,254 INFO APIs.help_func.log: get_similar_items called 60 times
+2026-02-03 23:08:58,660 INFO APIs.help_func.log: get_similar_items called 61 times
+2026-02-03 23:09:00,063 INFO APIs.help_func.log: get_similar_items called 62 times
+2026-02-03 23:09:01,347 INFO APIs.help_func.log: get_similar_items called 63 times
+2026-02-03 23:09:02,512 INFO APIs.help_func.log: get_similar_items called 64 times
+2026-02-03 23:09:04,154 INFO APIs.help_func.log: get_similar_items called 65 times
+2026-02-03 23:09:05,464 INFO APIs.help_func.log: get_similar_items called 66 times
+2026-02-03 23:09:06,535 INFO APIs.help_func.log: get_similar_items called 67 times
+2026-02-03 23:09:07,705 INFO APIs.help_func.log: get_similar_items called 68 times
+2026-02-03 23:09:09,107 INFO APIs.help_func.log: get_similar_items called 69 times
+2026-02-03 23:09:10,386 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:10,387 INFO APIs.help_func.log: get_similar_items called 70 times
+2026-02-03 23:09:11,628 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:11,629 INFO APIs.help_func.log: get_similar_items called 71 times
+2026-02-03 23:09:12,622 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:12,623 INFO APIs.help_func.log: get_similar_items called 72 times
+2026-02-03 23:09:13,637 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:13,638 INFO APIs.help_func.log: get_similar_items called 73 times
+2026-02-03 23:09:14,322 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:14,323 INFO APIs.help_func.log: get_similar_items called 74 times
+2026-02-03 23:09:15,185 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:15,187 INFO APIs.help_func.log: get_similar_items called 75 times
+2026-02-03 23:09:15,890 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:15,891 INFO APIs.help_func.log: get_similar_items called 76 times
+2026-02-03 23:09:16,494 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:16,495 INFO APIs.help_func.log: get_similar_items called 77 times
+2026-02-03 23:09:17,118 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:17,118 INFO APIs.help_func.log: get_similar_items called 78 times
+2026-02-03 23:09:17,831 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:17,831 INFO APIs.help_func.log: get_similar_items called 79 times
+2026-02-03 23:09:18,549 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:18,550 INFO APIs.help_func.log: get_similar_items called 80 times
+2026-02-03 23:09:19,269 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:19,270 INFO APIs.help_func.log: get_similar_items called 81 times
+2026-02-03 23:09:19,984 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:19,985 INFO APIs.help_func.log: get_similar_items called 82 times
+2026-02-03 23:09:20,702 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:20,703 INFO APIs.help_func.log: get_similar_items called 83 times
+2026-02-03 23:09:21,362 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:21,363 INFO APIs.help_func.log: get_similar_items called 84 times
+2026-02-03 23:09:22,091 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:22,091 INFO APIs.help_func.log: get_similar_items called 85 times
+2026-02-03 23:09:22,808 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:22,809 INFO APIs.help_func.log: get_similar_items called 86 times
+2026-02-03 23:09:23,432 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:23,433 INFO APIs.help_func.log: get_similar_items called 87 times
+2026-02-03 23:09:24,071 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:24,072 INFO APIs.help_func.log: get_similar_items called 88 times
+2026-02-03 23:09:24,687 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:24,688 INFO APIs.help_func.log: get_similar_items called 89 times
+2026-02-03 23:09:25,344 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:25,345 INFO APIs.help_func.log: get_similar_items called 90 times
+2026-02-03 23:09:26,000 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:26,000 INFO APIs.help_func.log: get_similar_items called 91 times
+2026-02-03 23:09:26,704 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:26,704 INFO APIs.help_func.log: get_similar_items called 92 times
+2026-02-03 23:09:27,368 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:27,369 INFO APIs.help_func.log: get_similar_items called 93 times
+2026-02-03 23:09:28,005 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:28,005 INFO APIs.help_func.log: get_similar_items called 94 times
+2026-02-03 23:09:28,633 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:28,634 INFO APIs.help_func.log: get_similar_items called 95 times
+2026-02-03 23:09:29,284 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:29,284 INFO APIs.help_func.log: get_similar_items called 96 times
+2026-02-03 23:09:29,962 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:29,963 INFO APIs.help_func.log: get_similar_items called 97 times
+2026-02-03 23:09:30,623 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:30,625 INFO APIs.help_func.log: get_similar_items called 98 times
+2026-02-03 23:09:31,392 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:31,392 INFO APIs.help_func.log: get_similar_items called 99 times
+2026-02-03 23:09:32,128 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:32,129 INFO APIs.help_func.log: get_similar_items called 100 times
+2026-02-03 23:09:33,071 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:33,072 INFO APIs.help_func.log: get_similar_items called 101 times
+2026-02-03 23:09:33,829 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:33,829 INFO APIs.help_func.log: get_similar_items called 102 times
+2026-02-03 23:09:34,484 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:34,485 INFO APIs.help_func.log: get_similar_items called 103 times
+2026-02-03 23:09:35,152 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:35,152 INFO APIs.help_func.log: get_similar_items called 104 times
+2026-02-03 23:09:35,846 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:35,846 INFO APIs.help_func.log: get_similar_items called 105 times
+2026-02-03 23:09:36,512 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:36,513 INFO APIs.help_func.log: get_similar_items called 106 times
+2026-02-03 23:09:37,231 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:37,232 INFO APIs.help_func.log: get_similar_items called 107 times
+2026-02-03 23:09:37,959 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:37,960 INFO APIs.help_func.log: get_similar_items called 108 times
+2026-02-03 23:09:39,175 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:39,175 INFO APIs.help_func.log: get_similar_items called 109 times
+2026-02-03 23:09:40,508 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:40,510 INFO APIs.help_func.log: get_similar_items called 110 times
+2026-02-03 23:09:42,126 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:42,127 INFO APIs.help_func.log: get_similar_items called 111 times
+2026-02-03 23:09:43,367 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:09:43,368 INFO APIs.help_func.log: get_similar_items called 112 times
+2026-02-03 23:09:44,680 INFO APIs.help_func.log: csf_sim func have this data 1
+2026-02-03 23:09:44,681 INFO APIs.help_func.log: get_similar_items called 113 times
+2026-02-03 23:09:45,865 INFO APIs.help_func.log: get_similar_items called 114 times
+2026-02-03 23:09:46,609 INFO APIs.help_func.log: get_similar_items called 115 times
+2026-02-03 23:09:47,297 INFO APIs.help_func.log: get_similar_items called 116 times
+2026-02-03 23:09:47,985 INFO APIs.help_func.log: get_similar_items called 117 times
+2026-02-03 23:09:48,699 INFO APIs.help_func.log: csf_sim func have this data 1
+2026-02-03 23:09:48,700 INFO APIs.help_func.log: get_similar_items called 118 times
+2026-02-03 23:09:49,348 INFO APIs.help_func.log: get_similar_items called 119 times
+2026-02-03 23:09:50,080 INFO APIs.help_func.log: get_similar_items called 120 times
+2026-02-03 23:09:50,774 INFO APIs.help_func.log: get_similar_items called 121 times
+2026-02-03 23:09:51,488 INFO APIs.help_func.log: get_similar_items called 122 times
+2026-02-03 23:09:52,534 INFO APIs.help_func.log: get_similar_items called 123 times
+2026-02-03 23:09:53,229 INFO APIs.help_func.log: get_similar_items called 124 times
+2026-02-03 23:09:53,883 INFO APIs.help_func.log: get_similar_items called 125 times
+2026-02-03 23:09:54,614 INFO APIs.help_func.log: get_similar_items called 126 times
+2026-02-03 23:09:55,673 INFO APIs.help_func.log: get_similar_items called 127 times
+2026-02-03 23:09:56,462 INFO APIs.help_func.log: get_similar_items called 128 times
+2026-02-03 23:09:57,349 INFO APIs.help_func.log: get_similar_items called 129 times
+2026-02-03 23:09:58,030 INFO APIs.help_func.log: get_similar_items called 130 times
+2026-02-03 23:09:58,731 INFO APIs.help_func.log: get_similar_items called 131 times
+2026-02-03 23:09:59,388 INFO APIs.help_func.log: get_similar_items called 132 times
+2026-02-03 23:10:00,310 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:00,311 INFO APIs.help_func.log: get_similar_items called 133 times
+2026-02-03 23:10:01,000 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:01,000 INFO APIs.help_func.log: get_similar_items called 134 times
+2026-02-03 23:10:01,672 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:01,673 INFO APIs.help_func.log: get_similar_items called 135 times
+2026-02-03 23:10:02,358 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:02,359 INFO APIs.help_func.log: get_similar_items called 136 times
+2026-02-03 23:10:03,153 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:03,154 INFO APIs.help_func.log: get_similar_items called 137 times
+2026-02-03 23:10:03,872 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:03,872 INFO APIs.help_func.log: get_similar_items called 138 times
+2026-02-03 23:10:04,811 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:04,812 INFO APIs.help_func.log: get_similar_items called 139 times
+2026-02-03 23:10:05,551 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:05,552 INFO APIs.help_func.log: get_similar_items called 140 times
+2026-02-03 23:10:06,185 INFO APIs.help_func.log: csf_similar func have this data 429
+2026-02-03 23:10:06,186 INFO APIs.help_func.log: get_similar_items called 141 times
+2026-02-03 23:10:07,493 INFO APIs.help_func.log: get_avg_price_similar_items called 1 times
+2026-02-03 23:10:07,494 INFO APIs.help_func.log: get_sim_hist called 1 times
