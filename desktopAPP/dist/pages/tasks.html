@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Задачи - Desktop App</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <div class="window">
+    <aside class="sidebar">
+      <div class="logo">MyApp</div>
+      <nav class="nav" id="nav"></nav>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <div>
+          <div class="caption">Моя работа</div>
+          <h1 class="title">Задачи</h1>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- Используем класс grid-single вместо инлайнового стиля -->
+        <div class="workspace grid-single">
+          <div class="panel">
+            <h2 class="panel-title">Входящие задачи</h2>
+            
+            <div class="list-item task-item">
+              <strong class="task-priority">Высокий приоритет:</strong> 
+              Исправить баг в модуле оружия
+            </div>
+
+            <div class="list-item">
+              <strong class="task-priority">Средний:</strong> 
+              Обновить иконки в сайдбаре
+            </div>
+
+            <!-- Используем класс task-done из предыдущего шага -->
+            <div class="list-item task-done">
+              <strong class="task-priority">Низкий:</strong> 
+              Почистить кэш сборки
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="statusbar">
+        <span id="status-text">Задач в работе: 2</span>
+        <span id="version-text">v0.1.0</span>
+      </footer>
+    </section>
+  </div>
+  <script type="module" src="../renderer.js"></script>
+</body>
+</html>

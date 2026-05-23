@@ -1,2 +1,8 @@
 .env
 log_csfloat.log
+postgres_data
+Noes.txt
+Task.txt
+node_modules
+.venv
+.vscode

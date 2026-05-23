@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Исправляет ошибку meta-viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Настройки - Desktop App</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <div class="window">
+    <aside class="sidebar">
+      <div class="logo">MyApp</div>
+      <nav class="nav" id="nav"></nav>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <div>
+          <div class="caption">Конфигурация</div>
+          <h1 class="title">Настройки</h1>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="panel form-group">
+          <h2 class="panel-title">Профиль</h2>
+          
+          <div class="full-width">
+            <!-- Исправляет ошибку axe/forms: связываем через id -->
+            <label class="card-label" for="username">Имя пользователя</label>
+            <input class="search full-width" id="username" type="text" value="Admin" placeholder="Введите имя..." />
+          </div>
+
+          <div class="full-width">
+            <label class="card-label" for="api-url">API URL</label>
+            <input class="search full-width" id="api-url" type="text" value="http://localhost:8080" placeholder="http://..." />
+          </div>
+
+          <!-- Исправляет ошибку no-inline-styles: используем классы из style.css -->
+          <div class="flex-between w-fit gap-10">
+              <input type="checkbox" checked id="notify">
+              <label for="notify">Включить уведомления</label>
+          </div>
+
+          <button class="primary-button w-fit">Сохранить изменения</button>
+        </div>
+      </main>
+    </section>
+  </div>
+  <script type="module" src="../renderer.js"></script>
+</body>
+</html>

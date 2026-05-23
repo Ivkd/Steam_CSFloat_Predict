@@ -1,0 +1,2784 @@
+
+-api:
+--hendler.py
+--schema.py
+--services.py
+-config:
+--settings.py
+-core:
+--logger.py
+-data:
+--db:
+---01_reference_tables.sql
+---02_catalog.sql
+---03_traders.sql
+---04_market.sql
+---05_ml.sql
+---06_stikers_and_atribut.sql
+---07_sql.sql
+--parser:
+---CSfloat:
+----inserts:
+-----types.py
+----catalog_insert.py
+----market_insert.py
+----primary_insert.py
+----stickers.py
+----traders.py
+---parserFloat.py
+--cs2data.py
+-servises:
+--file_utilits.py
+--market_servisce.py
+--services.py
+-main.py
+
+
+есть прекрасная архитектура 
+server:
+-api:
+--hendler.py
+--schema.py
+--services.py
+-config:
+--settings.py
+-core:
+--logger.py
+-data:
+--db:
+---01_reference_tables.sql
+---02_catalog.sql
+---03_traders.sql
+---04_market.sql
+---05_ml.sql
+---06_stikers_and_atribut.sql
+---07_sql.sql
+--parser:
+---CSfloat:
+----inserts:
+-----types.py
+----catalog_insert.py
+----market_insert.py
+----primary_insert.py
+----stickers.py
+----traders.py
+---parserFloat.py
+--cs2data.py
+-servises:
+--file_utilits.py
+--market_servisce.py
+--services.py
+-main.py
+
+содержимое файлов
+hendler.py:
+from fastapi import FastAPI, Depends
+from fastapi.responses import RedirectResponse
+from .services import *
+from fastapi.middleware.cors import CORSMiddleware
+
+
+app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/")
+async def root():
+    return RedirectResponse(url="/docs")
+
+
+@app.get("/weapon")
+async def get_weapons(pool=Depends(CSFloatBD)):
+    async with pool as db:
+        count = await count_weapons_in_db(db.pool)
+        return {"count": count}
+
+
+@app.get("/sticker")
+async def get_stickers(pool=Depends(CSFloatBD)):
+    async with pool as db:
+        count = await count_stickers_in_db(db.pool)
+        return {"count": count}
+    
+@app.get("/skin")
+async def get_skin(pool=Depends(CSFloatBD)):
+    async with pool as db:
+        count = await count_skin_in_db(db.pool)
+        return {"count": count}
+
+
+# @app.get("/items")
+# async def get_skin(pool=Depends(CSFloatBD)):
+#     async with pool as db:
+#         count = await count_items_in_db(db.pool)
+#         return {"count": count}
+
+schema.py
+пуст
+
+services.py
+import asyncpg
+import os
+from dotenv import load_dotenv
+
+
+from ..core.logger import *
+
+
+logger = get_logger("services")
+
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '../../.env')
+load_dotenv(dotenv_path)
+
+
+class CSFloatBD:
+    def __init__(self):
+        self.pool = None
+
+
+    async def __aenter__(self):
+        try:
+            logger.info("Создание пула базы данных...")
+            self.pool = await asyncpg.create_pool(
+                database=os.getenv("POSTGRES_DB"), 
+                host=os.getenv("POSTGRES_HOST"),
+                port=os.getenv("POSTGRES_PORT"),
+                password=os.getenv("POSTGRES_PASSWORD"),
+                user=os.getenv("POSTGRES_USER"),
+                min_size=5,
+                max_size=20
+            )
+            return self
+        except Exception as e:
+            logger.error(f"Сбой при создании пула базы данных: {e}")
+            raise e
+
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self.pool:
+            await self.pool.close()
+
+
+async def count_weapons_in_db(pool):
+    async with pool.acquire() as connection:
+        result = await connection.fetchval("SELECT COUNT(*) FROM weapon")
+        return result
+    
+async def count_stickers_in_db(pool):
+    async with pool.acquire() as connection:
+        result = await connection.fetchval("SELECT COUNT(*) FROM sticker")
+        return result
+
+
+async def count_skin_in_db(pool):
+    async with pool.acquire() as connection:
+        result = await connection.fetchval("SELECT COUNT(*) FROM skin")
+        return result
+    
+# async def count_skin_in_db(pool):
+#     async with pool.acquire() as connection:
+#         result = await connection.fetchval("SELECT COUNT(*) FROM ")
+#         return result
+
+logger.py
+import logging
+import sys
+from functools import wraps
+from time import time
+
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    handlers=[
+        logging.FileHandler('app.log'),
+        logging.StreamHandler(sys.stdout) # Явно указываем stdout для Docker
+    ]
+)
+
+
+def get_logger(name: str):
+    return logging.getLogger(name)
+
+
+# Декоратор выносим отдельно, так как он не зависит от конкретного экземпляра логгера
+def trace_execution(func):
+    logger = get_logger(func.__module__) # Берет имя файла как имя логгера
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        time_start = time()
+        logger.info(f"Функция {func.__name__} начала выполнение")
+        try:
+            result = await func(*args, **kwargs)
+            return result
+        except Exception as e:
+            logger.error(f"Ошибка в {func.__name__}: {e}")
+            raise # ВАЖНО: не глотай ошибку, если не хочешь Exited(0) при падении
+        finally:
+            logger.info(f"Функция {func.__name__} завершила выполнение за {time() - time_start:.2f}s")
+    return wrapper
+
+
+def count_calls(func):
+    logger = get_logger(func.__module__)
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        wrapper.calls += 1
+        logger.info(f"Функция {func.__name__} была вызвана {wrapper.calls} раз(а)")
+        return await func(*args, **kwargs)
+    wrapper.calls = 0
+    return wrapper 
+
+---01_reference_tables.sql:
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+
+-- =========================================================
+-- 1. Справочники
+-- =========================================================
+
+
+--платформы
+CREATE TABLE IF NOT EXISTS platform (
+    platform_id          BIGSERIAL PRIMARY KEY,
+    code                 TEXT NOT NULL, 
+    name                 TEXT NOT NULL,
+    CONSTRAINT uq_platform_code UNIQUE (code),
+    CONSTRAINT uq_platform_name UNIQUE (name),
+    CONSTRAINT chk_platform_code_not_blank CHECK (btrim(code) <> ''),
+    CONSTRAINT chk_platform_name_not_blank CHECK (btrim(name) <> '')
+);
+
+
+--цены на пушки
+CREATE TABLE IF NOT EXISTS currency (
+    currency_id          BIGSERIAL PRIMARY KEY,
+    code                 CHAR(3) NOT NULL,
+    name                 TEXT NOT NULL,
+    CONSTRAINT uq_currency_code UNIQUE (code),
+    CONSTRAINT chk_currency_code_upper CHECK (code = upper(code)),
+    CONSTRAINT chk_currency_name_not_blank CHECK (btrim(name) <> '')
+);
+
+
+--качества оружия
+CREATE TABLE IF NOT EXISTS item_quality (
+    quality_id           BIGSERIAL PRIMARY KEY,
+    code                 TEXT NOT NULL, -- FN BS
+    name                 TEXT NOT NULL,
+    min_float            NUMERIC(8,6),
+    max_float            NUMERIC(8,6),
+    CONSTRAINT uq_item_quality_code UNIQUE (code),
+    CONSTRAINT uq_item_quality_name UNIQUE (name),
+    CONSTRAINT chk_item_quality_code_not_blank CHECK (btrim(code) <> ''),
+    CONSTRAINT chk_item_quality_name_not_blank CHECK (btrim(name) <> ''),
+    CONSTRAINT chk_item_quality_min_float CHECK (
+        min_float IS NULL OR (min_float >= 0 AND min_float <= 1)
+    ),
+    CONSTRAINT chk_item_quality_max_float CHECK (
+        max_float IS NULL OR (max_float >= 0 AND max_float <= 1)
+    ),
+    CONSTRAINT chk_item_quality_float_range CHECK (
+        min_float IS NULL OR max_float IS NULL OR min_float <= max_float
+    )
+);
+
+
+--названия пушек
+CREATE TABLE IF NOT EXISTS weapon (
+    weapon_id            BIGSERIAL PRIMARY KEY,
+    name                 TEXT NOT NULL,
+    weapon_group         TEXT,
+    CONSTRAINT uq_weapon_name UNIQUE (name),
+    CONSTRAINT chk_weapon_name_not_blank CHECK (btrim(name) <> ''),
+    CONSTRAINT chk_weapon_group_not_blank CHECK (
+        weapon_group IS NULL OR btrim(weapon_group) <> ''
+    )
+);
+
+
+--скрины пушек
+CREATE TABLE IF NOT EXISTS skin (
+    skin_id              BIGSERIAL PRIMARY KEY,
+    name                 TEXT NOT NULL,
+    CONSTRAINT uq_skin_name UNIQUE (name),
+    CONSTRAINT chk_skin_name_not_blank CHECK (btrim(name) <> '')
+);
+
+
+--стикеры с пушек
+CREATE TABLE IF NOT EXISTS sticker (
+    sticker_id           BIGSERIAL PRIMARY KEY,
+    name                 TEXT NOT NULL,
+    price                NUMERIC(12,2),
+    CONSTRAINT chk_sticker_price_nonnegative CHECK (price >= 0),
+    CONSTRAINT uq_sticker_name UNIQUE (name),
+    CONSTRAINT chk_sticker_name_not_blank CHECK (btrim(name) <> '')
+);
+
+
+--типы событий 
+--пока не реализовано
+CREATE TABLE IF NOT EXISTS event_type (
+    event_type_id        BIGSERIAL PRIMARY KEY, -- купил продал 
+    code                 TEXT NOT NULL,
+    name                 TEXT NOT NULL,
+    CONSTRAINT uq_event_type_code UNIQUE (code),
+    CONSTRAINT uq_event_type_name UNIQUE (name),
+    CONSTRAINT chk_event_type_code_not_blank CHECK (btrim(code) <> ''),
+    CONSTRAINT chk_event_type_name_not_blank CHECK (btrim(name) <> '')
+);
+
+
+
+CREATE TABLE IF NOT EXISTS container (
+    container_id        BIGSERIAL PRIMARY KEY,
+    name                TEXT NOT NULL,
+    def_index           INTEGER,
+
+
+    CONSTRAINT uq_container_name UNIQUE (name),
+    CONSTRAINT chk_container_name_not_blank
+        CHECK (btrim(name) <> ''),
+);
+---02_catalog.sql
+
+
+-- =========================================================
+-- 2. Каталог предметов
+-- =========================================================
+
+
+--все оружия по полям из reference tables
+CREATE TABLE IF NOT EXISTS game_item (
+    game_item_id         BIGSERIAL PRIMARY KEY,
+    weapon_id            INT NOT NULL,
+    skin_id              INT NOT NULL,
+    quality_id           INT NOT NULL,
+    is_stattrak          BOOLEAN NOT NULL DEFAULT FALSE,
+    is_souvenir          BOOLEAN NOT NULL DEFAULT FALSE,
+
+
+    CONSTRAINT fk_game_item_weapon
+        FOREIGN KEY (weapon_id)
+        REFERENCES weapon (weapon_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_game_item_skin
+        FOREIGN KEY (skin_id)
+        REFERENCES skin (skin_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_game_item_quality
+        FOREIGN KEY (quality_id)
+        REFERENCES item_quality (quality_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_game_item_business
+        UNIQUE (weapon_id, skin_id, quality_id, is_stattrak, is_souvenir)
+);
+
+
+CREATE TABLE IF NOT EXISTS item_instance (
+    item_instance_id     BIGSERIAL PRIMARY KEY,
+    game_item_id         BIGINT NOT NULL,
+    origin_platform_id   BIGINT,
+    origin_asset_id      TEXT,
+    float_value          NUMERIC(8,6),
+    paint_seed           INTEGER,
+    inspect_link         TEXT,
+    first_seen_at        TEXT NOT NULL,
+
+
+    CONSTRAINT fk_item_instance_game_item
+        FOREIGN KEY (game_item_id)
+        REFERENCES game_item (game_item_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_item_instance_origin_platform
+        FOREIGN KEY (origin_platform_id)
+        REFERENCES platform (platform_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_item_instance_origin
+        UNIQUE (origin_platform_id, origin_asset_id),
+
+
+    CONSTRAINT chk_item_instance_float_value CHECK (
+        float_value IS NULL OR (float_value >= 0 AND float_value <= 1)
+    )
+);
+
+
+CREATE TABLE IF NOT EXISTS container_item (
+    container_item_id BIGSERIAL PRIMARY KEY,
+    container_id      BIGINT NOT NULL,
+    item_id      BIGINT,
+    is_active         BOOLEAN NOT NULL DEFAULT TRUE,
+
+
+    CONSTRAINT fk_container_item_container
+        FOREIGN KEY (container_id)
+        REFERENCES container (container_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT uq_container_item_business
+        UNIQUE (container_id, item_id, is_active)
+);
+---03_traders.sql
+-- =========================================================
+-- 3. Трейдеры
+-- =========================================================
+
+
+CREATE TABLE IF NOT EXISTS trader_account (
+    trader_account_id    BIGSERIAL PRIMARY KEY,
+    nickname             TEXT,
+    total_trades         INTEGER,
+    is_monitored         BOOLEAN NOT NULL DEFAULT TRUE,
+    CONSTRAINT chk_trader_account_nickname_not_blank CHECK (
+        nickname IS NULL OR btrim(nickname) <> ''
+    )
+);
+
+
+CREATE TABLE IF NOT EXISTS trader_platform_account (
+    trader_platform_account_id BIGSERIAL PRIMARY KEY,
+    trader_account_id          BIGINT NOT NULL,
+    platform_id                BIGINT NOT NULL,
+    platform_user_id           TEXT NOT NULL,
+    profile_url                TEXT,
+
+
+    CONSTRAINT fk_trader_platform_account_trader_account
+        FOREIGN KEY (trader_account_id)
+        REFERENCES trader_account (trader_account_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_platform_account_platform
+        FOREIGN KEY (platform_id)
+        REFERENCES platform (platform_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_trader_platform_account_platform_user
+        UNIQUE (platform_id, platform_user_id),
+
+
+    CONSTRAINT chk_trader_platform_account_platform_user_not_blank
+        CHECK (btrim(platform_user_id) <> '')
+);
+
+
+-- =========================================================
+-- 5. Инвентари трейдеров
+-- =========================================================
+
+
+CREATE TABLE IF NOT EXISTS trader_inventory_snapshot (
+    trader_inventory_snapshot_id BIGSERIAL PRIMARY KEY,
+    trader_platform_account_id   BIGINT NOT NULL,
+    observed_at                  TIMESTAMPTZ NOT NULL,
+    total_items_count            INTEGER,
+
+
+    CONSTRAINT fk_trader_inventory_snapshot_trader_platform_account
+        FOREIGN KEY (trader_platform_account_id)
+        REFERENCES trader_platform_account (trader_platform_account_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT uq_trader_inventory_snapshot_account_observed
+        UNIQUE (trader_platform_account_id, observed_at),
+
+
+    CONSTRAINT chk_trader_inventory_snapshot_total_items_nonnegative
+        CHECK (total_items_count IS NULL OR total_items_count >= 0)
+);
+
+
+CREATE TABLE IF NOT EXISTS trader_inventory_item_snapshot (
+    trader_inventory_item_snapshot_id BIGSERIAL PRIMARY KEY,
+    trader_inventory_snapshot_id      BIGINT NOT NULL,
+    item_instance_id                  BIGINT NOT NULL,
+    estimated_acquired_at             TIMESTAMPTZ,
+    estimated_unlock_at               TIMESTAMPTZ,
+    observed_list_price               NUMERIC(12,2),
+    currency_id                       BIGINT,
+    is_listed_for_sale                BOOLEAN,
+
+
+    CONSTRAINT fk_trader_inventory_item_snapshot_inventory_snapshot
+        FOREIGN KEY (trader_inventory_snapshot_id)
+        REFERENCES trader_inventory_snapshot (trader_inventory_snapshot_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_trader_inventory_item_snapshot_item_instance
+        FOREIGN KEY (item_instance_id)
+        REFERENCES item_instance (item_instance_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_inventory_item_snapshot_currency
+        FOREIGN KEY (currency_id)
+        REFERENCES currency (currency_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_trader_inventory_item_snapshot_business
+        UNIQUE (trader_inventory_snapshot_id, item_instance_id),
+
+
+    CONSTRAINT chk_trader_inventory_item_snapshot_price_nonnegative
+        CHECK (observed_list_price IS NULL OR observed_list_price >= 0),
+
+
+    CONSTRAINT chk_trader_inventory_item_snapshot_time_order
+        CHECK (
+            estimated_acquired_at IS NULL
+            OR estimated_unlock_at IS NULL
+            OR estimated_acquired_at <= estimated_unlock_at
+        )
+);
+
+
+CREATE TABLE IF NOT EXISTS trader_item_action (
+    trader_item_action_id       BIGSERIAL PRIMARY KEY,
+    trader_platform_account_id  BIGINT NOT NULL,
+    item_instance_id            BIGINT NOT NULL,
+    event_type_id               BIGINT NOT NULL,
+    action_time                 TIMESTAMPTZ NOT NULL,
+    price_amount                NUMERIC(12,2),
+    currency_id                 BIGINT,
+    confidence_score            NUMERIC(5,4),
+    source_snapshot_id          BIGINT,
+
+
+    CONSTRAINT fk_trader_item_action_trader_platform_account
+        FOREIGN KEY (trader_platform_account_id)
+        REFERENCES trader_platform_account (trader_platform_account_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_trader_item_action_item_instance
+        FOREIGN KEY (item_instance_id)
+        REFERENCES item_instance (item_instance_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_item_action_event_type
+        FOREIGN KEY (event_type_id)
+        REFERENCES event_type (event_type_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_item_action_currency
+        FOREIGN KEY (currency_id)
+        REFERENCES currency (currency_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_item_action_source_snapshot
+        FOREIGN KEY (source_snapshot_id)
+        REFERENCES trader_inventory_snapshot (trader_inventory_snapshot_id)
+        ON UPDATE RESTRICT
+        ON DELETE SET NULL,
+
+
+    CONSTRAINT chk_trader_item_action_price_nonnegative
+        CHECK (price_amount IS NULL OR price_amount >= 0),
+
+
+    CONSTRAINT chk_trader_item_action_confidence_range
+        CHECK (confidence_score IS NULL OR (confidence_score >= 0 AND confidence_score <= 1))
+);
+
+
+CREATE TABLE IF NOT EXISTS item_market_snapshot (
+    item_market_snapshot_id BIGSERIAL PRIMARY KEY,
+    platform_id             BIGINT NOT NULL,
+    game_item_id            BIGINT NOT NULL,
+    observed_at             TIMESTAMPTZ NOT NULL,
+    listings_count          INTEGER NOT NULL,
+    min_price               NUMERIC(12,2),
+    median_price            NUMERIC(12,2),
+    avg_price               NUMERIC(12,2),
+    max_price               NUMERIC(12,2),
+    sold_estimate_24h       INTEGER,
+    sold_estimate_7d        INTEGER,
+    scm_reference_price     NUMERIC(12,2),
+    scm_reference_volume    INTEGER,
+
+
+    CONSTRAINT fk_item_market_snapshot_platform
+        FOREIGN KEY (platform_id)
+        REFERENCES platform (platform_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_item_market_snapshot_game_item
+        FOREIGN KEY (game_item_id)
+        REFERENCES game_item (game_item_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_item_market_snapshot_business
+        UNIQUE (platform_id, game_item_id, observed_at),
+
+
+    CONSTRAINT chk_item_market_snapshot_listings_count_nonnegative
+        CHECK (listings_count >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_min_price_nonnegative
+        CHECK (min_price IS NULL OR min_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_median_price_nonnegative
+        CHECK (median_price IS NULL OR median_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_avg_price_nonnegative
+        CHECK (avg_price IS NULL OR avg_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_max_price_nonnegative
+        CHECK (max_price IS NULL OR max_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_sold_estimate_24h_nonnegative
+        CHECK (sold_estimate_24h IS NULL OR sold_estimate_24h >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_sold_estimate_7d_nonnegative
+        CHECK (sold_estimate_7d IS NULL OR sold_estimate_7d >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_scm_reference_price_nonnegative
+        CHECK (scm_reference_price IS NULL OR scm_reference_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_scm_reference_volume_nonnegative
+        CHECK (scm_reference_volume IS NULL OR scm_reference_volume >= 0)
+);
+
+
+
+---04_market.sql
+-- =========================================================
+-- 4. Листинги и история рынка
+-- =========================================================
+
+
+CREATE TABLE IF NOT EXISTS market_listing (
+    market_listing_id     BIGSERIAL PRIMARY KEY,
+    platform_id           BIGINT NOT NULL,
+    external_listing_id   TEXT NOT NULL,
+    item_instance_id      BIGINT NOT NULL,
+    seller_account_id     BIGINT,
+    currency_id           BIGINT NOT NULL,
+    listed_price          NUMERIC(12,2) NOT NULL,
+    listed_at             TIMESTAMPTZ NOT NULL,
+    first_seen_at         TIMESTAMPTZ NOT NULL,
+    last_seen_at          TIMESTAMPTZ NOT NULL,
+    current_status        TEXT NOT NULL,
+
+
+    CONSTRAINT fk_market_listing_platform
+        FOREIGN KEY (platform_id)
+        REFERENCES platform (platform_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_market_listing_item_instance
+        FOREIGN KEY (item_instance_id)
+        REFERENCES item_instance (item_instance_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_market_listing_seller_account
+        FOREIGN KEY (seller_account_id)
+        REFERENCES trader_platform_account (trader_platform_account_id)
+        ON UPDATE RESTRICT
+        ON DELETE SET NULL,
+
+
+    CONSTRAINT fk_market_listing_currency
+        FOREIGN KEY (currency_id)
+        REFERENCES currency (currency_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_market_listing_platform_external
+        UNIQUE (platform_id, external_listing_id),
+
+
+    CONSTRAINT chk_market_listing_external_listing_id_not_blank
+        CHECK (btrim(external_listing_id) <> ''),
+
+
+    CONSTRAINT chk_market_listing_price_nonnegative
+        CHECK (listed_price >= 0),
+
+
+    CONSTRAINT chk_market_listing_status_not_blank
+        CHECK (btrim(current_status) <> ''),
+
+
+    CONSTRAINT chk_market_listing_seen_order
+        CHECK (first_seen_at <= last_seen_at)
+);
+
+
+CREATE TABLE IF NOT EXISTS market_listing_price_history (
+    market_listing_price_history_id BIGSERIAL PRIMARY KEY,
+    market_listing_id               BIGINT NOT NULL,
+    observed_at                     TIMESTAMPTZ NOT NULL,
+    price_amount                    NUMERIC(12,2) NOT NULL,
+    currency_id                     BIGINT NOT NULL,
+
+
+    CONSTRAINT fk_market_listing_price_history_listing
+        FOREIGN KEY (market_listing_id)
+        REFERENCES market_listing (market_listing_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_market_listing_price_history_currency
+        FOREIGN KEY (currency_id)
+        REFERENCES currency (currency_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_market_listing_price_history_listing_observed
+        UNIQUE (market_listing_id, observed_at),
+
+
+    CONSTRAINT chk_market_listing_price_history_price_nonnegative
+        CHECK (price_amount >= 0)
+);
+
+
+CREATE TABLE IF NOT EXISTS market_listing_status_history (
+    market_listing_status_history_id BIGSERIAL PRIMARY KEY,
+    market_listing_id                BIGINT NOT NULL,
+    event_type_id                    BIGINT NOT NULL,
+    event_time                       TIMESTAMPTZ NOT NULL,
+    old_status                       TEXT,
+    new_status                       TEXT,
+
+
+    CONSTRAINT fk_market_listing_status_history_listing
+        FOREIGN KEY (market_listing_id)
+        REFERENCES market_listing (market_listing_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_market_listing_status_history_event_type
+        FOREIGN KEY (event_type_id)
+        REFERENCES event_type (event_type_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_market_listing_status_history_business
+        UNIQUE (market_listing_id, event_time, event_type_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS market_observation_snapshot (
+    market_observation_snapshot_id BIGSERIAL PRIMARY KEY,
+    market_listing_id              BIGINT NOT NULL,
+    observed_at                    TIMESTAMPTZ NOT NULL,
+    position_in_search             INTEGER,
+    watchers_count                 INTEGER,
+    min_offer_price                NUMERIC(12,2),
+    scm_reference_price            NUMERIC(12,2),
+    scm_reference_volume           INTEGER,
+    is_visible                     BOOLEAN NOT NULL,
+
+
+    CONSTRAINT fk_market_observation_snapshot_listing
+        FOREIGN KEY (market_listing_id)
+        REFERENCES market_listing (market_listing_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT uq_market_observation_snapshot_listing_observed
+        UNIQUE (market_listing_id, observed_at),
+
+
+    CONSTRAINT chk_market_observation_snapshot_position_nonnegative
+        CHECK (position_in_search IS NULL OR position_in_search >= 0),
+
+
+    CONSTRAINT chk_market_observation_snapshot_watchers_nonnegative
+        CHECK (watchers_count IS NULL OR watchers_count >= 0),
+
+
+    CONSTRAINT chk_market_observation_snapshot_min_offer_nonnegative
+        CHECK (min_offer_price IS NULL OR min_offer_price >= 0),
+
+
+    CONSTRAINT chk_market_observation_snapshot_scm_price_nonnegative
+        CHECK (scm_reference_price IS NULL OR scm_reference_price >= 0),
+
+
+    CONSTRAINT chk_market_observation_snapshot_scm_volume_nonnegative
+        CHECK (scm_reference_volume IS NULL OR scm_reference_volume >= 0)
+);
+
+
+CREATE TABLE IF NOT EXISTS container_market_snapshot (
+    container_market_snapshot_id BIGSERIAL PRIMARY KEY,
+    container_id                 BIGINT NOT NULL,
+    platform_id                  BIGINT NOT NULL,
+    observed_at                  TIMESTAMPTZ NOT NULL,
+    listings_count               INTEGER NOT NULL,
+    min_price                    NUMERIC(12,2),
+    median_price                 NUMERIC(12,2),
+    avg_price                    NUMERIC(12,2),
+    max_price                    NUMERIC(12,2),
+    sold_estimate_24h            INTEGER,
+    sold_estimate_7d             INTEGER,
+
+
+    CONSTRAINT fk_container_market_snapshot_container
+        FOREIGN KEY (container_id)
+        REFERENCES container (container_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_container_market_snapshot_platform
+        FOREIGN KEY (platform_id)
+        REFERENCES platform (platform_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_container_market_snapshot_business
+        UNIQUE (container_id, platform_id, observed_at),
+
+
+    CONSTRAINT chk_container_market_snapshot_listings_count_nonnegative
+        CHECK (listings_count >= 0),
+
+
+    CONSTRAINT chk_container_market_snapshot_min_price_nonnegative
+        CHECK (min_price IS NULL OR min_price >= 0),
+
+
+    CONSTRAINT chk_container_market_snapshot_median_price_nonnegative
+        CHECK (median_price IS NULL OR median_price >= 0),
+
+
+    CONSTRAINT chk_container_market_snapshot_avg_price_nonnegative
+        CHECK (avg_price IS NULL OR avg_price >= 0),
+
+
+    CONSTRAINT chk_container_market_snapshot_max_price_nonnegative
+        CHECK (max_price IS NULL OR max_price >= 0),
+
+
+    CONSTRAINT chk_container_market_snapshot_sold_estimate_24h_nonnegative
+        CHECK (sold_estimate_24h IS NULL OR sold_estimate_24h >= 0),
+
+
+    CONSTRAINT chk_container_market_snapshot_sold_estimate_7d_nonnegative
+        CHECK (sold_estimate_7d IS NULL OR sold_estimate_7d >= 0)
+);
+
+---05_ml.sql
+-- =========================================================
+-- 5. Инвентари трейдеров
+-- =========================================================
+
+
+CREATE TABLE IF NOT EXISTS trader_inventory_snapshot (
+    trader_inventory_snapshot_id BIGSERIAL PRIMARY KEY,
+    trader_platform_account_id   BIGINT NOT NULL,
+    observed_at                  TIMESTAMPTZ NOT NULL,
+    total_items_count            INTEGER,
+
+
+    CONSTRAINT fk_trader_inventory_snapshot_trader_platform_account
+        FOREIGN KEY (trader_platform_account_id)
+        REFERENCES trader_platform_account (trader_platform_account_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT uq_trader_inventory_snapshot_account_observed
+        UNIQUE (trader_platform_account_id, observed_at),
+
+
+    CONSTRAINT chk_trader_inventory_snapshot_total_items_nonnegative
+        CHECK (total_items_count IS NULL OR total_items_count >= 0)
+);
+
+
+CREATE TABLE IF NOT EXISTS trader_inventory_item_snapshot (
+    trader_inventory_item_snapshot_id BIGSERIAL PRIMARY KEY,
+    trader_inventory_snapshot_id      BIGINT NOT NULL,
+    item_instance_id                  BIGINT NOT NULL,
+    estimated_acquired_at             TIMESTAMPTZ,
+    estimated_unlock_at               TIMESTAMPTZ,
+    observed_list_price               NUMERIC(12,2),
+    currency_id                       BIGINT,
+    is_listed_for_sale                BOOLEAN,
+
+
+    CONSTRAINT fk_trader_inventory_item_snapshot_inventory_snapshot
+        FOREIGN KEY (trader_inventory_snapshot_id)
+        REFERENCES trader_inventory_snapshot (trader_inventory_snapshot_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_trader_inventory_item_snapshot_item_instance
+        FOREIGN KEY (item_instance_id)
+        REFERENCES item_instance (item_instance_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_inventory_item_snapshot_currency
+        FOREIGN KEY (currency_id)
+        REFERENCES currency (currency_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_trader_inventory_item_snapshot_business
+        UNIQUE (trader_inventory_snapshot_id, item_instance_id),
+
+
+    CONSTRAINT chk_trader_inventory_item_snapshot_price_nonnegative
+        CHECK (observed_list_price IS NULL OR observed_list_price >= 0),
+
+
+    CONSTRAINT chk_trader_inventory_item_snapshot_time_order
+        CHECK (
+            estimated_acquired_at IS NULL
+            OR estimated_unlock_at IS NULL
+            OR estimated_acquired_at <= estimated_unlock_at
+        )
+);
+
+
+CREATE TABLE IF NOT EXISTS trader_item_action (
+    trader_item_action_id       BIGSERIAL PRIMARY KEY,
+    trader_platform_account_id  BIGINT NOT NULL,
+    item_instance_id            BIGINT NOT NULL,
+    event_type_id               BIGINT NOT NULL,
+    action_time                 TIMESTAMPTZ NOT NULL,
+    price_amount                NUMERIC(12,2),
+    currency_id                 BIGINT,
+    confidence_score            NUMERIC(5,4),
+    source_snapshot_id          BIGINT,
+
+
+    CONSTRAINT fk_trader_item_action_trader_platform_account
+        FOREIGN KEY (trader_platform_account_id)
+        REFERENCES trader_platform_account (trader_platform_account_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_trader_item_action_item_instance
+        FOREIGN KEY (item_instance_id)
+        REFERENCES item_instance (item_instance_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_item_action_event_type
+        FOREIGN KEY (event_type_id)
+        REFERENCES event_type (event_type_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_item_action_currency
+        FOREIGN KEY (currency_id)
+        REFERENCES currency (currency_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_trader_item_action_source_snapshot
+        FOREIGN KEY (source_snapshot_id)
+        REFERENCES trader_inventory_snapshot (trader_inventory_snapshot_id)
+        ON UPDATE RESTRICT
+        ON DELETE SET NULL,
+
+
+    CONSTRAINT chk_trader_item_action_price_nonnegative
+        CHECK (price_amount IS NULL OR price_amount >= 0),
+
+
+    CONSTRAINT chk_trader_item_action_confidence_range
+        CHECK (confidence_score IS NULL OR (confidence_score >= 0 AND confidence_score <= 1))
+);
+
+
+CREATE TABLE IF NOT EXISTS item_market_snapshot (
+    item_market_snapshot_id BIGSERIAL PRIMARY KEY,
+    platform_id             BIGINT NOT NULL,
+    game_item_id            BIGINT NOT NULL,
+    observed_at             TIMESTAMPTZ NOT NULL,
+    listings_count          INTEGER NOT NULL,
+    min_price               NUMERIC(12,2),
+    median_price            NUMERIC(12,2),
+    avg_price               NUMERIC(12,2),
+    max_price               NUMERIC(12,2),
+    sold_estimate_24h       INTEGER,
+    sold_estimate_7d        INTEGER,
+    scm_reference_price     NUMERIC(12,2),
+    scm_reference_volume    INTEGER,
+
+
+    CONSTRAINT fk_item_market_snapshot_platform
+        FOREIGN KEY (platform_id)
+        REFERENCES platform (platform_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT fk_item_market_snapshot_game_item
+        FOREIGN KEY (game_item_id)
+        REFERENCES game_item (game_item_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_item_market_snapshot_business
+        UNIQUE (platform_id, game_item_id, observed_at),
+
+
+    CONSTRAINT chk_item_market_snapshot_listings_count_nonnegative
+        CHECK (listings_count >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_min_price_nonnegative
+        CHECK (min_price IS NULL OR min_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_median_price_nonnegative
+        CHECK (median_price IS NULL OR median_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_avg_price_nonnegative
+        CHECK (avg_price IS NULL OR avg_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_max_price_nonnegative
+        CHECK (max_price IS NULL OR max_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_sold_estimate_24h_nonnegative
+        CHECK (sold_estimate_24h IS NULL OR sold_estimate_24h >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_sold_estimate_7d_nonnegative
+        CHECK (sold_estimate_7d IS NULL OR sold_estimate_7d >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_scm_reference_price_nonnegative
+        CHECK (scm_reference_price IS NULL OR scm_reference_price >= 0),
+
+
+    CONSTRAINT chk_item_market_snapshot_scm_reference_volume_nonnegative
+        CHECK (scm_reference_volume IS NULL OR scm_reference_volume >= 0)
+);
+
+---06_stikers_and_atribut.sql
+--стикеры на конректном предмете
+CREATE TABLE IF NOT EXISTS item_instance_sticker (
+    item_instance_sticker_id BIGSERIAL PRIMARY KEY,
+    item_instance_id         BIGINT NOT NULL,
+    sticker_id               BIGINT NOT NULL,
+    slot_no                  SMALLINT NOT NULL,
+    wear_value               NUMERIC(8,6),
+
+
+    CONSTRAINT fk_item_instance_sticker_item_instance
+        FOREIGN KEY (item_instance_id)
+        REFERENCES item_instance (item_instance_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT fk_item_instance_sticker_sticker
+        FOREIGN KEY (sticker_id)
+        REFERENCES sticker (sticker_id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+
+
+    CONSTRAINT uq_item_instance_sticker_item_slot
+        UNIQUE (item_instance_id, slot_no),
+
+
+    CONSTRAINT chk_item_instance_sticker_slot_no_range
+        CHECK (slot_no BETWEEN 1 AND 5),
+
+
+    CONSTRAINT chk_item_instance_sticker_wear_value_range
+        CHECK (wear_value IS NULL OR (wear_value >= 0 AND wear_value <= 1))
+);
+
+
+--атрибуты на конкретном предмете
+CREATE TABLE IF NOT EXISTS item_instance_attribute (
+    item_instance_attribute_id BIGSERIAL PRIMARY KEY,
+    item_instance_id           BIGINT NOT NULL,
+    attr_name                  TEXT NOT NULL,
+    attr_value                 TEXT NOT NULL,
+
+
+    CONSTRAINT fk_item_instance_attribute_item_instance
+        FOREIGN KEY (item_instance_id)
+        REFERENCES item_instance (item_instance_id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+
+
+    CONSTRAINT uq_item_instance_attribute_item_attr
+        UNIQUE (item_instance_id, attr_name),
+
+
+    CONSTRAINT chk_item_instance_attribute_attr_name_not_blank
+        CHECK (btrim(attr_name) <> ''),
+
+
+    CONSTRAINT chk_item_instance_attribute_attr_value_not_blank
+        CHECK (btrim(attr_value) <> '')
+);
+
+---07_sql.sql
+-- =========================================================
+-- 8. Индексы
+-- PostgreSQL не создает индексы на FK автоматически,
+-- а для JOIN/DELETE/UPDATE они очень важны.
+-- =========================================================
+
+
+CREATE INDEX IF NOT EXISTS idx_game_item_weapon_id
+    ON game_item (weapon_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_game_item_skin_id
+    ON game_item (skin_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_game_item_quality_id
+    ON game_item (quality_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_item_instance_game_item_id
+    ON item_instance (game_item_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_item_instance_origin_platform_id
+    ON item_instance (origin_platform_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_platform_account_trader_account_id
+    ON trader_platform_account (trader_account_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_platform_account_platform_id
+    ON trader_platform_account (platform_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_listing_platform_id
+    ON market_listing (platform_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_listing_item_instance_id
+    ON market_listing (item_instance_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_listing_seller_account_id
+    ON market_listing (seller_account_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_listing_currency_id
+    ON market_listing (currency_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_listing_price_history_market_listing_id
+    ON market_listing_price_history (market_listing_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_listing_price_history_currency_id
+    ON market_listing_price_history (currency_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_listing_status_history_market_listing_id
+    ON market_listing_status_history (market_listing_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_listing_status_history_event_type_id
+    ON market_listing_status_history (event_type_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_market_observation_snapshot_market_listing_id
+    ON market_observation_snapshot (market_listing_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_inventory_snapshot_trader_platform_account_id
+    ON trader_inventory_snapshot (trader_platform_account_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_inventory_item_snapshot_inventory_snapshot_id
+    ON trader_inventory_item_snapshot (trader_inventory_snapshot_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_inventory_item_snapshot_item_instance_id
+    ON trader_inventory_item_snapshot (item_instance_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_inventory_item_snapshot_currency_id
+    ON trader_inventory_item_snapshot (currency_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_item_action_trader_platform_account_id
+    ON trader_item_action (trader_platform_account_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_item_action_item_instance_id
+    ON trader_item_action (item_instance_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_item_action_event_type_id
+    ON trader_item_action (event_type_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_trader_item_action_source_snapshot_id
+    ON trader_item_action (source_snapshot_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_item_market_snapshot_platform_id
+    ON item_market_snapshot (platform_id);
+
+
+CREATE INDEX IF NOT EXISTS idx_item_market_snapshot_game_item_id
+    ON item_market_snapshot (game_item_id);
+
+
+
+-----types.py
+from typing import Optional, List, Dict, Any 
+from dataclasses import dataclass  
+from abc import ABC, abstractmethod
+
+
+
+
+
+class CSFloatItem:
+    def __init__(self, listing: Dict[str, Any]):
+        self.listing = listing
+        self.id = listing.get("id")
+        self.item_data = listing.get("item", {})
+        self.item_type = self.item_data.get("type", {})
+        self.item_price = self.listing.get("price")
+        self.created_at = self.listing.get("created_at")
+        self.state = self.listing.get("state")
+        self.seller = self.listing.get("seller")
+
+
+        self.seller_id = self.seller.get("steam_id") 
+        self.seller_name = self.seller.get("username")
+        self.total_trades = self.seller.get("statistics").get("total_trades")
+
+
+        # Основные поля
+        self.item_full_name = self.item_data.get("item_name")
+        self.is_stattrak = self.item_data.get("is_stattrak") or False
+        self.is_souvenir = self.item_data.get("is_souvenir") or False
+        self.quality = self.item_data.get("wear_name")
+        self.asset_id = self.item_data.get("asset_id")
+        self.float_value = self.item_data.get("float_value")
+        self.paint_seed = self.item_data.get("paint_seed")
+        self.inspect_link = self.item_data.get("inspect_link")
+        self.stickers = self.item_data.get("stickers", [])
+        self.def_index = self.item_data.get("def_index")
+
+
+        # Вычисляемое поле: название скина (часть после "|")
+        if self.item_full_name and "|" in self.item_full_name:
+            self.skin_name = self.item_full_name.split("|")[-1].strip()
+            self.item_name = self.item_full_name.split("|")[0].strip().strip("★").strip()
+        else:
+            self.skin_name = None
+            self.item_name = self.item_full_name
+
+
+class CSSelectRepository(ABC):
+    @abstractmethod
+    async def weapon_id(self, conn) -> 'CSSelects': ...
+
+
+    @abstractmethod
+    async def skin_id(self, conn) -> 'CSSelects': ...
+
+
+    @abstractmethod
+    async def quality_id(self, conn) -> 'CSSelects': ...
+
+
+    @abstractmethod
+    async def platform_id(self, conn, platform_data) -> 'CSSelects': ...
+
+
+    @abstractmethod
+    async def get_game_item_id(self, conn) -> 'CSSelects': ...
+
+
+    @abstractmethod
+    async def currency_id(self, conn) -> 'CSSelects': ...
+
+
+    @abstractmethod
+    async def market_listing_id(self, conn, platform_data) -> 'CSSelects': ...
+
+
+    @abstractmethod
+    async def get_item_instance_id(self, conn) -> Optional[int]: ...
+
+
+
+class CSTraderRepository(ABC):
+    @abstractmethod
+    async def trader_platform_account_id(self, conn) -> 'CSTraders': ...
+
+
+
+class CSFloatGetRepository(ABC):
+    @abstractmethod
+    async def get_items(self) -> list: ...
+
+
+    @abstractmethod
+    async def get_skins(self) -> list: ...
+
+
+    @abstractmethod
+    async def get_seller_ids(self) -> list: ...
+
+
+
+class CSSelects(CSSelectRepository, CSFloatItem):
+    def __init__(self, listing: Dict[str, Any]):
+        CSFloatItem.__init__(self, listing)
+        self._weapon_id: int = None
+        self._skin_id: int = None
+        self._quality_id: int = None
+        self._game_item_id: int = None
+        self._platform_id: int = None
+        self._currency_id: int = None
+        self._event_type_id: int = None
+        self._market_listing_id: int = None
+        self.item_instance_id:int = None
+
+
+    async def weapon_id(self, conn) -> 'CSSelects':
+        if self._weapon_id is None:
+            self._weapon_id = await conn.fetchval(
+                "SELECT weapon_id FROM weapon WHERE name=$1",
+                self.item_name
+            )
+        return self._weapon_id 
+        
+    async def skin_id(self, conn) -> 'CSSelects':
+        if self._skin_id is None:
+            self._skin_id = await conn.fetchval(
+                "SELECT skin_id FROM skin WHERE name=$1",
+                self.skin_name
+            )
+        return self._skin_id
+    
+    async def quality_id(self, conn) -> 'CSSelects':
+        if self._quality_id is None:
+            self._quality_id = await conn.fetchval(
+                "SELECT quality_id FROM item_quality WHERE name=$1",
+                self.quality
+            )
+        return self._quality_id
+    
+    async def platform_id(self, conn, platform_data):
+        if self._platform_id is None:
+            self._platform_id = await conn.fetchval(
+                "SELECT platform_id FROM platform WHERE code=$1",
+                platform_data
+            )
+        return self._platform_id 
+
+
+    async def currency_id(self, conn):
+        if self._currency_id is None:
+            self._currency_id = await conn.fetchval(
+                "SELECT currency_id FROM currency WHERE code=$1",
+                "USD"
+            )
+        return self._currency_id
+
+
+    async def event_type_id(self, conn):
+        if self._event_type_id is None:
+            self._event_type_id = await conn.fetchval(
+                "SELECT event_type_id FROM event_type WHERE code=$1",
+                self.state
+            )
+        return self._event_type_id
+
+
+    async def container_id(self, conn):
+        if self._container_id is None:
+            self._container_id = await conn.fetchval(
+                "SELECT container_id FROM container WHERE def_index=$1",
+                self.def_index
+            )
+        return self._container_id
+
+
+    async def get_game_item_id(self, conn) -> 'CSSelects':
+        if self._game_item_id is None:
+            w_id = await self.weapon_id(conn)
+            s_id = await self.skin_id(conn)
+            q_id = await self.quality_id(conn)
+
+
+            self._game_item_id = await conn.fetchval("""
+                SELECT game_item_id FROM game_item
+                WHERE weapon_id=$1, skin_id=$2, quality_id=$3
+                AND is_stattrak=$4, is_souvenir=$5
+            """,
+            w_id, s_id, q_id,
+            self.is_stattrak,
+            self.is_souvenir
+            )
+        return self._game_item_id
+    
+    async def market_listing_id(self, conn, platform_data):
+        if self._market_listing_id is None:    
+            p_id = await self.platform_id(conn, platform_data)
+            self._market_listing_id = await conn.fetchval("""
+                SELECT market_listing_id FROM market_listing
+                WHERE platform_id=$1, external_listing_id=$2
+            """,
+            p_id, self.id
+            )
+        return self._market_listing_id
+
+
+    async def get_item_instance_id(self, conn) -> Optional[int]:
+        g_i_id = await self.get_game_item_id(conn)
+        p_id = await self.platform_id(conn, "csfoat")
+
+
+        if self._market_listing_id is None: 
+            item_instance_id = await conn.fetchval("""
+                SELECT item_instance_id FROM item_instance
+                WHERE game_item_id=$1 AND origin_platform_id=$2 AND origin_asset_id=$3
+            """,
+            g_i_id,
+            p_id,
+            self.asset_id
+            )
+        return item_instance_id
+
+
+
+class CSTraders(CSTraderRepository, CSFloatItem, CSSelects):
+    def __init__(self, listing:Dict[str, Any]):
+        CSFloatItem.__init__(self, listing)
+        CSSelects.__init__(self, listing)
+        self._trader_id: int = None
+        self._trader_inventory_snapshot_id: int = None
+
+
+    async def trader_platform_account_id(self, conn) -> 'CSTraders':
+        p_id = await self.platform_id(conn, "csfloat")
+
+
+        if self._trader_id is None:
+            self._trader_id = await conn.fetchval(
+                """
+                SELECT trader_platform_account_id
+                FROM trader_platform_account
+                WHERE platform_id = $1 AND external_id = $2
+                """,
+                str(self.seller_id)
+            )
+        return self._trader_id
+
+
+    async def trader_inventory_snapshot_id(self, conn, observed_at) -> 'CSTraders':
+        trader_platform_account_id = await self.trader_platform_account_id(conn)
+
+
+        if trader_platform_account_id is None:
+            self._trader_inventory_snapshot_id = await conn.fetchval(
+                """
+                INSERT INTO trader_inventory_snapshot (
+                    trader_platform_account_id,
+                    observed_at,
+                    total_items_count
+                )
+                VALUES ($1, $2, $3)
+                RETURNING trader_inventory_snapshot_id
+                """,
+                trader_platform_account_id,
+                observed_at,
+                0 # TODO сделать подсчет из steam ссылки
+            )
+        return self._trader_inventory_snapshot_id
+
+
+
+class CSFloatGet(CSFloatGetRepository):
+    def __init__(self, pool):
+        self.pool = pool
+        self.data = None
+        self.skins = None
+        self.seller_ids = None
+
+
+    async def get_items(self) -> list:
+        async with self.pool.acquire() as conn:
+            if self.data is None:
+                self.data = await conn.fetch("SELECT external_listing_id FROM market_listing")
+        return self.data
+
+
+    async def get_skins(self) -> list:
+        async with self.pool.acquire() as conn:
+            if self.skins is None:
+                self.skins = await conn.fetch("SELECT name FROM skin")
+        return self.skins
+
+
+    async def get_seller_ids(self) -> list:
+        async with self.pool.acquire() as conn:
+            if self.seller_ids is None:
+                self.seller_ids = await conn.fetch("SELECT external_id FROM trader_platform_account WHERE platform_id = 2") # TODO сделать автоматический выбор платформы
+        return self.seller_ids
+
+
+# Не нужный класс
+    
+
+
+class CursorState:
+    def __init__(self):
+        self.cursor: str | None = None
+
+
+    def get(self) -> str | None:
+        return self.cursor
+
+
+    def set(self, value: str | None) -> None:
+        self.cursor = value
+
+
+    def clear(self) -> None:
+        self.cursor = None
+
+----catalog_insert.py
+#вставка данных в таблицы
+from .....core.logger import *
+from server.data.parser.CSfoat.inserts.utilits.types import CSFloatItem, CSSelects
+
+
+
+logger = get_logger("parserFloat")
+
+
+async def insert_game_item_from_response(pool, cs_item: CSFloatItem) -> None:
+    try:
+        async with pool.acquire() as conn:
+            # 1. Принудительно приводим к строке, чтобы избежать ошибки "expected str, got int"
+            csselects = CSSelects(cs_item.listing)
+            w_id = await csselects.weapon_id(conn)
+            s_id = await csselects.skin_id(conn)
+            q_id = await csselects.quality_id(conn)
+            # logger.info(f"Полученные ID для {cs_item.item_name}: weapon_id={w_id}, skin_id={s_id}, quality_id={q_id}")
+
+
+            if w_id is None or s_id is None or q_id is None:
+                logger.warning(f"Пропуск: не найден weapon_id ({w_id}) или skin_id ({s_id}) или quality_id {q_id},{cs_item.quality}, для {cs_item.item_name}")
+                await conn.execute("""
+                    INSERT INTO weapon (weapon_id, name, weapon_group)
+                    VALUES ($1, $2, $3)
+                    ON CONFLICT (weapon_id) DO NOTHING
+                """, cs_item.def_index, cs_item.item_name, "Unknown")
+            
+            await conn.execute("""
+                INSERT INTO game_item (weapon_id, skin_id, quality_id, is_stattrak, is_souvenir)
+                VALUES ($1, $2, $3, $4, $5)
+                ON CONFLICT (weapon_id, skin_id, quality_id, is_stattrak, is_souvenir)
+                DO NOTHING
+            """,
+            w_id, s_id, q_id,
+            csselects.is_stattrak,
+            csselects.is_souvenir
+            )
+            # logger.info("item успешно вставился")
+    except Exception as e:
+        logger.error(f"Ошибка при вставке данных для game_item: {e}")
+        
+async def insert_item_instance_from_response(pool, cs_item: CSFloatItem) -> None:
+    try:
+        async with pool.acquire() as conn:
+            # Повторяем поиск ID (лучше было бы возвращать game_item_id из первой функции)
+            csselects = CSSelects(cs_item.listing)
+            game_item_id = await csselects.get_game_item_id(conn)
+
+
+            platform_id = await csselects.platform_id(conn, "csfoat")  # TODO сделать автоматичкиеский выбор
+            
+            # logger.info(f"Полученный game_item_id для {cs_item.item_name}: {game_item_id}")
+            
+            await conn.execute("""
+                INSERT INTO item_instance (
+                    game_item_id, 
+                    origin_platform_id,
+                    origin_asset_id,
+                    float_value,
+                    paint_seed,
+                    inspect_link,
+                    first_seen_at
+                )
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                ON CONFLICT (origin_platform_id, origin_asset_id)
+                DO NOTHING
+            """,
+            game_item_id,
+            platform_id,
+            cs_item.asset_id,
+            cs_item.float_value,
+            cs_item.paint_seed,
+            cs_item.inspect_link,
+            cs_item.created_at
+            )
+    except Exception as e:
+        logger.error(f"Ошибка при вставке данных для экземпляра предмета: {e}")
+
+
+async def insert_container_item(pool, cs_item: CSFloatItem) -> None:
+    try:
+        async with pool.acquire() as conn:
+            csselects = CSSelects(cs_item.listing)
+            container_id = await csselects.container_id(conn)
+            
+            await conn.execute("""
+                INSERT INTO container_item (
+                    container_id, 
+                    item_id,
+                    is_active
+                )
+                VALUES ($1, $2, $3)
+                ON CONFLICT (container_id, item_id)
+                DO NOTHING
+            """,
+            container_id,
+            cs_item.id,
+            True
+            )
+    except Exception as e:
+        logger.error(f"Ошибка при вставке данных для предмета в контейнере: {e}")
+
+
+
+----market_insert.py
+
+from server.data.parser.CSfoat.inserts.utilits.types import CSFloatItem, CSSelects, CSTraders
+
+
+async def market_listing_insert(pool, cs_item: CSFloatItem):
+    async with pool.acquire() as conn:
+        csselect = CSSelects(cs_item.listing)
+        cstraders = CSTraders(cs_item.listing)
+        
+        platform_id = await csselect.platform_id(conn, "csfoat")  # TODO сделать автоматичкиеский выбор
+        currency_id = await csselect.currency_id(conn)  
+        item_instance_id = await csselect.get_item_instance_id(conn)
+        
+        seller_account_id = await cstraders.trader_platform_account_id(conn, "csfoat")
+        listed_price = cs_item.item_price
+        listed_at = cs_item.created_at
+        current_status = cs_item.state 
+        await conn.execute(
+            """
+            INSERT INTO market_listing (
+                platform_id,
+                external_listing_id,
+                item_instance_id,
+                seller_account_id,
+                currency_id,
+                listed_price,
+                listed_at,
+                first_seen_at,
+                last_seen_at,
+                current_status
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $7, $7, $8)
+            ON CONFLICT (platform_id, external_listing_id)
+            DO UPDATE
+            SET
+                listed_price = EXCLUDED.listed_price,
+                last_seen_at   = EXCLUDED.last_seen_at,
+                current_status = EXCLUDED.current_status
+            """,
+
+
+            platform_id,
+            cs_item.id,
+            item_instance_id,
+            seller_account_id,
+            currency_id,
+            listed_price,
+            listed_at,
+            current_status,
+        )
+
+
+async def market_listing_price_history_insert(pool, cs_item: CSFloatItem):
+    async with pool.acquire() as conn:
+
+
+        csselect = CSSelects(cs_item.listing)
+        currency_id = await csselect.currency_id(conn)
+        market_listing_id = await csselect.market_listing_id(conn, "csfoat")
+
+
+        await conn.execute(
+            """
+            INSERT INTO market_listing_price_history (
+                market_listing_id,
+                observed_at,
+                price_amount,
+                currency_id
+            )
+            VALUES ($1, $2, $3, $4)
+            ON CONFLICT (market_listing_id, observed_at)
+            DO NOTHING
+            """,
+            market_listing_id,
+            cs_item.created_at,
+            cs_item.item_price,
+            currency_id
+        )
+
+
+
+async def market_listing_status_history_insert(pool, cs_item: CSFloatItem):
+    async with pool.acquire() as conn:
+        csselect = CSSelects(cs_item.listing)
+
+
+        old_status = None  # TODO: получить предыдущий статус из базы данных
+        
+        market_listing_id = await csselect.market_listing_id(conn, "csfoat")
+        event_type_id = await csselect.event_type_id(conn)
+
+
+        await conn.execute(
+            """
+            INSERT INTO market_listing_status_history (
+                market_listing_id,
+                event_type_id,
+                event_time,
+                old_status,
+                new_status
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            ON CONFLICT (market_listing_id, event_time, event_type_id)
+            DO NOTHING
+            """,
+            market_listing_id,
+            event_type_id,
+            cs_item.created_at,
+            old_status,
+            cs_item.state
+        )
+
+
+
+async def market_observation_snapshot_insert(pool, cs_item: CSFloatItem):
+    async with pool.acquire() as conn:
+        scm_reference_price = 0 # TODO сделать подсчет из steam ссылки
+        position_in_search = 0  # TODO: сделать подсчет из steam ссылки
+        watchers_count = 0  # TODO сделать подсчет из steam ссылки
+        is_visible = cs_item.state == "active"  # TODO: уточнить логику определения видимости
+        
+        csselect = CSSelects(cs_item.listing)
+        market_listing_id = await csselect.market_listing_id(conn, "csfoat")
+
+
+        await conn.execute(
+            """
+            INSERT INTO market_observation_snapshot (
+                market_listing_id,
+                observed_at,
+                position_in_search,
+                watchers_count,
+                min_offer_price,
+                scm_reference_price,
+                scm_reference_volume,
+                is_visible
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            ON CONFLICT (market_listing_id, observed_at)
+            DO UPDATE
+            SET
+                position_in_search   = EXCLUDED.position_in_search,
+                watchers_count       = EXCLUDED.watchers_count,
+                min_offer_price      = EXCLUDED.min_offer_price,
+                scm_reference_price  = EXCLUDED.scm_reference_price,
+                scm_reference_volume = EXCLUDED.scm_reference_volume,
+                is_visible           = EXCLUDED.is_visible
+            """,
+            market_listing_id,
+            cs_item.created_at,
+            position_in_search,
+            watchers_count,
+            cs_item.item_price,
+            scm_reference_price,
+            cs_item.quality,
+            is_visible
+        )
+
+
+
+async def insert_container_market_snapshot(pool, cs_item: CSFloatItem) -> None:
+    csselects = CSSelects(cs_item.listing)
+    platform_id = await csselects.platform_id(pool, "csfoat")  # TODO сделать автоматичкиеский выбор
+    async with pool.acquire() as conn:
+        # Получаем ID контейнера
+        container_id = await csselects.container_id(conn)
+        # Вставляем снимок рыночной цены для контейнера
+        await conn.execute("""
+            INSERT INTO container_market_snapshot (
+                container_id, 
+                platform_id,
+                observed_at,
+                listings_count,
+                min_price,
+                median_price,
+                avg_price,
+                max_price,
+                sold_estimate_24h,
+                sold_estimate_7d
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        """,
+        container_id,
+        platform_id,
+        cs_item.created_at,
+        0, #TODO: заменить на реальное количество листингов для контейнера, если эта информация доступна в ответе API
+        0, #TODO: заменить на реальную минимальную цену для контейнера, если эта информация доступна в ответе API
+        0, #TODO: заменить на реальный средний цену для контейнера, если эта информация доступна в ответе API
+        0, #TODO: заменить на реальную максимальную цену для контейнера, если эта информация доступна в ответе API
+        0, #TODO: заменить на реальное количество проданных предметов за 24 часа для контейнера, если эта информация доступна в ответе API
+        0  #TODO: заменить на реальное количество проданных предметов за 7 дней для контейнера, если эта информация доступна в ответе API
+        )
+
+
+
+----primary_insert.py
+
+from fastapi import logger
+
+
+from .....core.logger import *
+
+
+# Функция без response, так как данные о платформах статичны и не зависят от ответа API
+async def insert_platform(pool, platform_data):
+    for id in platform_data:
+        code = platform_data[id]["code"]
+        name = platform_data[id]["name"]    
+        async with pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO platform (code, name)
+                VALUES ($1, $2)
+                ON CONFLICT (code) DO NOTHING
+            """, code, name)
+
+
+async def insert_currency(pool, currency_data):
+    for id in currency_data:
+        code = currency_data[id]["code"]
+        name = currency_data[id]["name"]
+        async with pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO currency (code, name)
+                VALUES ($1, $2)
+                ON CONFLICT (code) DO NOTHING
+            """, code, name)
+
+
+async def insert_quality(pool, item_quality_data):
+    for id in item_quality_data:
+
+
+        code = item_quality_data[id]["code"]
+        name = item_quality_data[id]["name"] 
+        min_float = item_quality_data[id]["min_float"]
+        max_float = item_quality_data[id]["max_float"]
+
+
+        async with pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO item_quality (code, name, min_float, max_float)
+                VALUES ($1, $2, $3, $4)
+                ON CONFLICT (code) DO NOTHING
+            """, code, name, min_float, max_float)
+
+
+async def insert_weapon(pool, weapon_data):
+    for id in weapon_data:
+        weapon_id = id
+        weapon_name = weapon_data[id]["name"]
+        weapon_group = weapon_data[id]["weapon_group"]
+        async with pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO weapon (weapon_id, name, weapon_group)
+                VALUES ($1, $2, $3)
+                ON CONFLICT (weapon_id) DO NOTHING
+            """, weapon_id, weapon_name, weapon_group)
+
+
+
+# Далее функции для вставки данных, зависящих от ответа API
+async def insert_sticker(pool, name: str, price: int):
+        async with pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO sticker (name, price)
+                VALUES ($1, $2)
+                ON CONFLICT (name) DO NOTHING
+            """, name, price)
+
+
+async def insert_skin_from_response(pool, skin_name: str):
+    async with pool.acquire() as conn:
+        await conn.execute("""
+            INSERT INTO skin (name)
+            VALUES ($1)
+            ON CONFLICT (name) DO NOTHING
+        """, skin_name)
+
+
+async def insert_event_type(pool, event_type_data):
+    for id in event_type_data:
+        code = event_type_data[id]["code"]
+        name = event_type_data[id]["name"]
+        async with pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO event_type (code, name)
+                VALUES ($1, $2)
+                ON CONFLICT (code) DO NOTHING
+            """, code, name)
+        
+async def insert_containers(pool, container_data):
+    for id in container_data:
+        def_index = container_data[id]["def_index"]
+        name = container_data[id]["name"]
+        async with pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO container (def_index, name)
+                VALUES ($1, $2)
+                ON CONFLICT (def_index) DO NOTHING
+            """, def_index, name)
+
+
+----traders.py
+from __future__ import annotations
+
+
+from decimal import Decimal
+from typing import Any, Dict, Iterable, Optional, Sequence
+from datetime import datetime
+
+
+from .....core.logger import *
+from server.data.parser.CSfoat.inserts.utilits.types import CSFloatItem, CSSelects, CSTraders
+
+
+logger = get_logger("parserFloatTrader")
+
+
+
+async def upsert_trader_from_listing(pool, cs_item: CSFloatItem):
+    csselect = CSSelects(cs_item.listing)
+    async with pool.acquire() as conn:
+        platform_id = await csselect.platform_id(conn, "csfloat")
+
+
+        trader_account_id = await conn.fetchval(
+            """
+            INSERT INTO trader_account (nickname, total_trades, is_moderated)
+            VALUES ($1, $2, $3)
+            RETURNING trader_account_id
+            """,
+            cs_item.seller_name,
+            cs_item.total_trades,
+            True,
+        )
+
+
+        await conn.fetchval(
+            """
+            INSERT INTO trader_platform_account (
+                trader_account_id,
+                platform_id,
+                platform_user_id,
+                profile_url
+            )
+            VALUES ($1, $2, $3, $4)
+            """,
+            trader_account_id,
+            platform_id,
+            str(cs_item.seller_id),
+            f"https://csfloat.com/stall/{cs_item.seller_id}"
+        )
+
+
+async def create_trader_inventory_snapshot( pool, cs_item: CSFloatItem):
+    cstraders = CSTraders(cs_item.listing)
+    observed_at = datetime.now()
+    trader_paltform_account_id = await cstraders.trader_platform_account_id(conn)
+    async with pool.acquire() as conn:
+        await conn.fetchval(
+            """
+            INSERT INTO trader_inventory_snapshot (
+                trader_platform_account_id,
+                observed_at,
+                total_items_count
+            )
+            VALUES ($1, $2, $3)
+            ON CONFLICT (trader_platform_account_id, observed_at)
+            DO UPDATE
+            SET total_items_count = EXCLUDED.total_items_count
+            """,
+            trader_paltform_account_id,
+            observed_at,
+            0 # cs_item.total_items_count TODO сделать подсчет из steam ссылки
+        )
+
+
+
+async def insert_trader_inventory_item_snapshot(pool, cs_item: CSFloatItem):
+    csselect = CSSelects(cs_item.listing)
+    cstreagers = CSTraders(cs_item.listing)
+    
+    trader_inventory_snapshot_id = await cstreagers.trader_inventory_snapshot_id(conn, datetime.now())
+    item_instance_id = await csselect.get_item_instance_id(conn)
+    currency_id = await csselect.currency_id(conn)
+    observed_list_price = cs_item.item_price
+
+
+    async with pool.acquire() as conn:
+        await conn.fetchval(
+            """
+            INSERT INTO trader_inventory_item_snapshot (
+                trader_inventory_snapshot_id,
+                item_instance_id,
+                estimated_acquired_at,
+                estimated_unlock_at,
+                observed_list_price,
+                currency_id,
+                is_listed_for_sale
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            ON CONFLICT (trader_inventory_snapshot_id, item_instance_id)
+            DO UPDATE
+            SET estimated_acquired_at = EXCLUDED.estimated_acquired_at,
+                estimated_unlock_at = EXCLUDED.estimated_unlock_at,
+                observed_list_price = EXCLUDED.observed_list_price,
+                currency_id = EXCLUDED.currency_id,
+                is_listed_for_sale = EXCLUDED.is_listed_for_sale
+            """,
+            trader_inventory_snapshot_id,
+            item_instance_id,
+            None,
+            None,
+            observed_list_price,
+            currency_id,
+            True
+        )
+
+
+async def insert_trader_item_action(pool, cs_item: CSFloatItem):
+    csselect = CSSelects(cs_item.listing)
+    cstreagers = CSTraders(cs_item.listing)
+
+
+    trader_platform_account_id = await cstreagers.trader_platform_account_id(conn)
+    currency_id = await csselect.currency_id(conn)
+    item_instance_id = await csselect.get_item_instance_id(conn)
+    event_type_id = await csselect.event_type_id(conn)
+    action_time = cs_item.created_at or datetime.now()
+    price_amount = cs_item.item_price
+    confidence_score = 1.0
+    source_snapshot_id = await cstreagers.trader_inventory_snapshot_id(conn, datetime.now())
+
+
+    async with pool.acquire() as conn:  
+
+
+        trader_item_action_id = await conn.fetchval(
+            """
+            INSERT INTO trader_item_action (
+                trader_platform_account_id,
+                item_instance_id,
+                event_type_id,
+                action_time,
+                price_amount,
+                currency_id,
+                confidence_score,
+                source_snapshot_id
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING trader_item_action_id
+            """,
+            trader_platform_account_id,
+            item_instance_id,
+            event_type_id,
+            action_time,
+            price_amount,
+            currency_id,
+            confidence_score,
+            source_snapshot_id
+        )
+        return trader_item_action_id
+
+
+# Фунция для получения item_instance_id, если он не был найден при вставке в market_listing.
+# В этом случае мы предполагаем, что item_instance уже существует и пытаемся его найти по game_item_id, origin_platform_id и origin_asset_id.
+
+
+
+# async def mark_missing_seller_items_as_not_listed(pool, cs_item: CSFloatItem):
+#     actual_asset_ids = {str(x) for x in actual_asset_ids if x is not None}
+#     csselect = CSSelects(cs_item.listing)
+#     cstreagers = CSTraders(cs_item.listing)
+
+
+#     trader_platform_account_id = await cstreagers.trader_platform_account_id(conn)
+#     observed_at = datetime.now()
+#     event_type_id = await csselect.evet_type_id(conn)
+#     changed = 0
+
+
+#     async with pool.acquire() as conn:
+#         missing_rows = await conn.fetch(
+#             """
+#             SELECT
+#                 ii.item_instance_id,
+#                 ii.origin_asset_id,
+#                 ml.listed_price,
+#                 ml.currency_id
+#             FROM market_listing ml
+#             JOIN item_instance ii
+#               ON ii.item_instance_id = ml.item_instance_id
+#             WHERE ml.seller_account_id = $1
+#               AND ml.current_status = 'listed'
+#               AND (ii.origin_asset_id IS NOT NULL)
+#             """,
+#             trader_platform_account_id
+#         )
+
+
+#         for row in missing_rows:
+#             asset_id = str(row["origin_asset_id"])
+#             if asset_id in actual_asset_ids:
+#                 continue
+
+
+#             await conn.execute(
+#                 """
+#                 UPDATE market_listing
+#                 SET current_status = 'not_listed',
+#                     last_seen_at = $2
+#                 WHERE seller_account_id = $1
+#                   AND item_instance_id = $3
+#                   AND current_status = 'listed'
+#                 """,
+#                 trader_platform_account_id,
+#                 observed_at,
+#                 row["item_instance_id"]
+#             )
+
+
+#             await conn.execute(
+#                 """
+#                 INSERT INTO trader_item_action (
+#                     trader_platform_account_id,
+#                     item_instance_id,
+#                     event_type_id,
+#                     action_time,
+#                     price_amount,
+#                     currency_id,
+#                     confidence_score,
+#                     source_snapshot_id
+#                 )
+#                 VALUES ($1, $2, $3, $4, $5, $6, $7, NULL)
+#                 """,
+#                 trader_platform_account_id,
+#                 row["item_instance_id"],
+#                 event_type_id,
+#                 observed_at,
+#                 row["listed_price"],
+#                 row["currency_id"],
+#                 0.75
+#             )
+
+
+#             changed += 1
+
+
+#         return changed
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+____________________________________________________________________________________________________________
+_____________________________________________________________________________________________________________
+---parserFloat.py
+import os
+from urllib import response
+import aiohttp
+from typing import Dict, Any, List, Optional
+from datetime import datetime
+from dotenv import load_dotenv
+from dataclasses import dataclass
+
+
+import asyncpg
+from ....core.logger import *
+from .inserts.primary_insert import *
+from .inserts.market_insert import *
+from .inserts.stickers import *
+from .inserts.traders import *
+from .inserts.catalog_insert import *
+from ...cs2data import *
+from .inserts.utilits.types import CursorState, CSFloatGet
+
+
+# name_p7c_p20 =hash_name.replace(" ","%20").replace("|","%7C") 
+# url_name_print_item = f"https://csfloat.com/api/v1/history/{name_p7c_p20}/sales?paint_index={paint_idx}"
+#--------used 
+url_csfloat = "https://csfloat.com/api/v1/listings"
+url_sellerCSfloat = "https://csfloat.com/api/v1/users"
+url_instant_item_exeple = "https://csfloat.com/api/v1/listings/971397574441438945" 
+url_sellerCSfloat_exemple = "https://csfloat.com/api/v1/users/76561198080430599/stall?limit=40"
+
+
+#--------not used
+url_containers = "https://csfloat.com/api/v1/listings?limit=40&def_index=4698"
+url_similar = "https://csfloat.com/api/v1/listings/976205109581188335/similar"
+url_instant_item_ = "https://csfloat.com/item/971734279736397150" #ccылка нужна для создания simmilar в базе данных, так как в ответе от csfloat нет ссылки на item, а она нужна для создания simmilar
+massage_error_response = "You need to be logged in to search listings"
+
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '../../../../.env')
+load_dotenv(dotenv_path)
+CSFLOAT_API_KEY = os.getenv("API_KEY")
+logger = get_logger("parserFloat")
+
+
+
+
+#
+#function of request from CS 
+#currency
+#weapon
+#skin
+#stikers
+#
+class CSFloatBD:
+    def __init__(self):
+        self.pool = None    
+
+
+    async def __aenter__(self):
+        self.pool = await asyncpg.create_pool(
+            database=os.getenv("POSTGRES_DB"),
+            host=os.getenv("POSTGRES_HOST"),
+            port=os.getenv("POSTGRES_PORT"),
+            password=os.getenv("POSTGRES_PASSWORD"),
+            user=os.getenv("POSTGRES_USER"),
+            min_size=5,
+            max_size=20
+        )
+        return self
+
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        if self.pool:
+            await self.pool.close()
+
+
+async def hendler_error_request(response) -> Dict[str, Any] | None:
+    if response.status != 200:
+        logger.error(f"Ошибка Запрос завершился с кодом {response.status}")
+        return None
+    
+    data = await response.json()
+    if data.get("message") == massage_error_response:
+        logger.error(f"Ошибка в cursor")
+        return None
+
+
+    if not data.get("cursor"):
+        logger.error(f"Нет курсора: {data.get('cursor')}")
+        CursorState().clear()
+        return None
+
+
+    return data
+
+
+@count_calls
+async def get_data_csfloat(url,  cursor_state: CursorState) -> Dict[str, Any] | None:
+    try:
+        params = {}
+        if cursor_state.get():
+            params["cursor"] = cursor_state.get()
+
+
+        headers = {
+            "Authorization": CSFLOAT_API_KEY,
+            "Content-Type": "application/json"
+        }
+
+
+        async with aiohttp.ClientSession() as ssestion:
+            async with ssestion.get(url, headers=headers, params=params) as response:
+                data = await hendler_error_request(response)
+
+
+                if data is None:
+                    logger.error(f"Полученные данные недействительны или произошла ошибка при обработке ответа.")
+                    return None
+                
+                cursor_state.set(data.get("cursor"))
+                return data
+    except Exception as e:
+        logger.error(f"Ошибка при выполнении запроса: {e}")
+        return None
+    
+    
+async def activate_primary_insert_whitout_response(pool):
+    try:
+        await insert_platform(pool, platform_data)
+        await insert_currency(pool, currency_data)
+        await insert_quality(pool, item_quality_data)
+        await insert_weapon(pool, weapon_data)
+        await insert_event_type(pool, event_type_data)
+        await insert_containers(pool, container_data)
+        
+    except Exception as e:
+        logger.error(f"Ошибка при вставке данных без ответа: {e}")
+
+
+async def get_items(response: Dict[str, Any]):
+    listings = response.get("data", [])
+    if listings is None:
+        return [response]
+    return [CSFloatItem(listing) for listing in listings]
+
+
+async def insert_data_from_response(pool, response: Dict[str, Any]) -> None:
+    try:
+        items = get_items(response)
+
+
+        for cs_item in items:
+            if cs_item.item_type == "container":
+                await insert_container_item(pool, cs_item)
+                continue
+
+
+            if cs_item.item_type == "sticker":
+                await insert_sticker(pool, cs_item.item_name, cs_item.item_price)
+                continue
+            
+            if cs_item.item_type == "agent":
+                # logger.info("Пропуск: agent")
+                continue
+            
+            if cs_item.stickers:
+                for sticker in cs_item.stickers:
+                    name = sticker.get("name", None)
+                    reference = sticker.get("reference", {})
+                    price = reference.get("price", None) 
+
+
+                    if name is not None and price is not None:
+                        await insert_sticker(pool, name, price)
+            
+            # logger.info(f"{cs_item.id} {cs_item.skin_name}")
+            if cs_item.skin_name is None:
+                continue
+
+
+            await insert_skin_from_response(pool, cs_item.skin_name)
+            await insert_game_item_from_response(pool, cs_item)
+            await insert_item_instance_from_response(pool, cs_item)
+
+
+            await upsert_trader_from_listing(pool, cs_item)
+            await create_trader_inventory_snapshot(pool, cs_item)
+            await insert_trader_inventory_item_snapshot(pool, cs_item)
+            await insert_trader_item_action(pool, cs_item)
+
+
+            await market_listing_insert(pool, cs_item)
+            await market_listing_price_history_insert(pool, cs_item)
+            await market_listing_status_history_insert(pool, cs_item)
+            await market_observation_snapshot_insert(pool, cs_item)
+
+
+    except Exception as e:
+        logger.error(f"Ошибка при вставке данных из ответа: {e}")
+        raise
+
+
+
+@trace_execution
+async def started():
+    try:
+        floatdb = CSFloatBD()
+        cursor = CursorState()
+        logger.info(f"Парсер запущен в {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+
+        data = await get_data_csfloat(url_csfloat, cursor)
+        
+        async with floatdb as db:
+            csfloatget = CSFloatGet(db.pool)
+            skins = await csfloatget.get_skins()
+            if skins is None:
+                await activate_primary_insert_whitout_response(db.pool) 
+
+
+            while data and cursor.get():
+                await insert_data_from_response(db.pool, data)
+                
+                data = await get_data_csfloat(url_csfloat, cursor)
+                if not cursor.get(): 
+                    logger.info("Курсор пуст, завершение парсинга.")
+                    break
+    except Exception as e:
+        logger.error(f"Ошибка: {e}")
+        raise
+
+
+
+#новый код
+async def get_data_whitout_api(url: str) -> Dict[str, Any] | None:
+    try:
+        headers = {
+            "Content-Type": "application/json"
+        }
+        
+        async with aiohttp.ClientSession() as ssestion:
+            async with ssestion.get(url, headers=headers) as response:
+                data = await hendler_error_request(response)
+
+
+                if data is None:
+                    logger.error(f"Полученные данные недействительны или произошла ошибка при обработке ответа.")
+                    return None
+                return data
+            
+    except Exception as e:
+        logger.error(f"Ошибка при получении данных по ID: {e}")
+
+
+
+async def check_data_repit():
+    try:
+        floatdb = CSFloatBD()
+        
+        async with floatdb as db:
+            csfloatget = CSFloatGet(db.pool)
+            market_listing_id = await csfloatget.get_items()
+
+
+            for listing_id in market_listing_id:
+                url = f"{url_csfloat}/{listing_id}"
+                response = await get_data_whitout_api(url)
+                await insert_data_from_response(db.pool, response)
+
+
+
+    except Exception as e:
+        logger.error(f"Ошибка при проверке данных на повторение: {e}")
+        raise
+
+
+
+async def check_data_seller():
+    try:    
+        floatdb = CSFloatBD()
+
+
+        async with floatdb as db:
+            csfloatget = CSFloatGet(db.pool)
+            seller_ids = await csfloatget.get_seller_ids()
+
+
+            for seller_id in seller_ids:
+                url = f"{url_sellerCSfloat}/{seller_id}/stall?limit=40"
+                response = await get_data_whitout_api(url)
+                await insert_data_from_response(db.pool, response)
+
+
+
+    except Exception as e:
+        logger.error(f"Ошибка при проверке данных продавца: {e}")
+        raise
+
+--cs2data.py
+platform_data = {
+    1: {"code": "steam", "name": "Steam"},
+    2: {"code": "csfloat", "name": "CSFloat"}}
+currency_data = {
+    1: {"code": "USD", "name": "US Dollar"}
+    
+    }
+
+
+item_quality_data = {
+    1: {"code": "FN", "name": "Factory New", "min_float": 0.00, "max_float": 0.07},
+    2: {"code": "MW", "name": "Minimal Wear", "min_float": 0.07, "max_float": 0.15},
+    3: {"code": "FT", "name": "Field-Tested", "min_float": 0.15, "max_float": 0.38},
+    4: {"code": "WW", "name": "Well-Worn", "min_float": 0.38, "max_float": 0.45},
+    5: {"code": "BS", "name": "Battle-Scarred", "min_float": 0.45, "max_float": 1.00},
+}
+
+
+weapon_data = {
+    1: {"name": "Desert Eagle", "weapon_group": "Pistol"},
+    2: {"name": "Dual Berettas", "weapon_group": "Pistol"},
+    3: {"name": "Five-SeveN", "weapon_group": "Pistol"},
+    4: {"name": "Glock-18", "weapon_group": "Pistol"},
+    7: {"name": "AK-47", "weapon_group": "Rifle"},
+    8: {"name": "AUG", "weapon_group": "Rifle"},
+    9: {"name": "AWP", "weapon_group": "Sniper Rifle"},
+    10: {"name": "FAMAS", "weapon_group": "Rifle"},
+    11: {"name": "G3SG1", "weapon_group": "Sniper Rifle"},
+    13: {"name": "Galil AR", "weapon_group": "Rifle"},
+    14: {"name": "M249", "weapon_group": "Heavy"},
+    16: {"name": "M4A4", "weapon_group": "Rifle"},
+    17: {"name": "MAC-10", "weapon_group": "SMG"},
+    19: {"name": "P90", "weapon_group": "SMG"},
+    23: {"name": "MP5-SD", "weapon_group": "SMG"},
+    24: {"name": "UMP-45", "weapon_group": "SMG"},
+    25: {"name": "XM1014", "weapon_group": "Shotgun"},
+    26: {"name": "PP-Bizon", "weapon_group": "SMG"},
+    27: {"name": "MAG-7", "weapon_group": "Shotgun"},
+    28: {"name": "Negev", "weapon_group": "Heavy"},
+    29: {"name": "Sawed-Off", "weapon_group": "Shotgun"},
+    30: {"name": "Tec-9", "weapon_group": "Pistol"},
+    31: {"name": "Zeus x27", "weapon_group": "Pistol"},
+    32: {"name": "P2000", "weapon_group": "Pistol"},
+    33: {"name": "MP7", "weapon_group": "SMG"},
+    34: {"name": "MP9", "weapon_group": "SMG"},
+    35: {"name": "Nova", "weapon_group": "Shotgun"},
+    36: {"name": "P250", "weapon_group": "Pistol"},
+    38: {"name": "SCAR-20", "weapon_group": "Sniper Rifle"},
+    39: {"name": "SG 553", "weapon_group": "Rifle"},
+    40: {"name": "SSG 08", "weapon_group": "Sniper Rifle"},
+    60: {"name": "M4A1-S", "weapon_group": "Rifle"},
+    61: {"name": "USP-S", "weapon_group": "Pistol"},
+    63: {"name": "CZ75-Auto", "weapon_group": "Pistol"},
+    64: {"name": "R8 Revolver", "weapon_group": "Pistol"},
+
+
+    
+    # Knives (ножи) - самые популярные
+    500: {"name": "Bayonet", "weapon_group": "Knife"},
+    505: {"name": "Flip Knife", "weapon_group": "Knife"},
+    506: {"name": "Gut Knife", "weapon_group": "Knife"},
+    507: {"name": "Karambit", "weapon_group": "Knife"},
+    509: {"name": "Huntsman Knife", "weapon_group": "Knife"},
+    508: {"name": "M9 Bayonet", "weapon_group": "Knife"},
+    515: {"name": "Butterfly Knife", "weapon_group": "Knife"},
+    516: {"name": "Shadow Daggers", "weapon_group": "Knife"},
+    514: {"name": "Bowie Knife", "weapon_group": "Knife"},
+    512: {"name": "Falchion Knife", "weapon_group": "Knife"},
+    520: {"name": "Navaja Knife", "weapon_group": "Knife"},
+    522: {"name": "Stiletto Knife", "weapon_group": "Knife"},
+    523: {"name": "Talon Knife", "weapon_group": "Knife"},
+    503: {"name": "Classic Knife", "weapon_group": "Knife"},
+    517: {"name": "Paracord Knife", "weapon_group": "Knife"},
+    518: {"name": "Survival Knife", "weapon_group": "Knife"},
+    519: {"name": "Ursus Knife", "weapon_group": "Knife"},
+    521: {"name": "Nomad Knife", "weapon_group": "Knife"},
+    525: {"name": "Skeleton Knife", "weapon_group": "Knife"},
+    526: {"name": "Kukri Knife" , "weapon_group": "Knife"},
+   
+    # Special
+    31: {"name": "Zeus x27", "weapon_group": "Special"},
+}
+
+
+container_data = {
+    4725: {"name": "Broken Fang Gloves", "weapon_group": "Glove"},
+    5027: {"name": "Bloodhound Gloves", "weapon_group": "Glove"},
+    5030: {"name": "Sport Gloves", "weapon_group": "Glove"},
+    5031: {"name": "Driver Gloves", "weapon_group": "Glove"},
+    5032: {"name": "Hand Wraps", "weapon_group": "Glove"},
+    5033: {"name": "Moto Gloves", "weapon_group": "Glove"},
+    5034: {"name": "Specialist Gloves", "weapon_group": "Glove"},
+    5035: {"name": "Hydra Gloves", "weapon_group": "Glove"},
+    
+    4001: { "name": "CS:GO Weapon Case", "container_type": "Case" },
+    4002: { "name": "eSports 2013 Case", "container_type": "Case" },
+    4003: { "name": "Operation Bravo Case", "container_type": "Case" },
+    4004: { "name": "CS:GO Weapon Case 2", "container_type": "Case" },
+    4005: { "name": "eSports 2013 Winter Case", "container_type": "Case" },
+    4009: { "name": "Winter Offensive Weapon Case", "container_type": "Case" },
+    4010: { "name": "CS:GO Weapon Case 3", "container_type": "Case" },
+    4011: { "name": "Operation Phoenix Weapon Case", "container_type": "Case" },
+
+
+    4017: { "name": "Huntsman Weapon Case", "container_type": "Case" },
+    4018: { "name": "Operation Breakout Weapon Case", "container_type": "Case" },
+    4019: { "name": "eSports 2014 Summer Case", "container_type": "Case" },
+    4029: { "name": "Operation Vanguard Weapon Case", "container_type": "Case" },
+
+
+    4061: { "name": "Chroma Case", "container_type": "Case" },
+    4089: { "name": "Chroma 2 Case", "container_type": "Case" },
+    4091: { "name": "Falchion Case", "container_type": "Case" },
+    4138: { "name": "Shadow Case", "container_type": "Case" },
+    4186: { "name": "Revolver Case", "container_type": "Case" },
+    4187: { "name": "Operation Wildfire Case", "container_type": "Case" },
+    4233: { "name": "Chroma 3 Case", "container_type": "Case" },
+    4236: { "name": "Gamma Case", "container_type": "Case" },
+    4281: { "name": "Gamma 2 Case", "container_type": "Case" },
+    4288: { "name": "Glove Case", "container_type": "Case" },
+    4351: { "name": "Spectrum Case", "container_type": "Case" },
+    4352: { "name": "Operation Hydra Case", "container_type": "Case" },
+    4403: { "name": "Spectrum 2 Case", "container_type": "Case" },
+    4471: { "name": "Clutch Case", "container_type": "Case" },
+    4482: { "name": "Horizon Case", "container_type": "Case" },
+    4548: { "name": "Danger Zone Case", "container_type": "Case" },
+    4598: { "name": "Prisma Case", "container_type": "Case" },
+    4620: { "name": "Shattered Web Case", "container_type": "Case" },
+    4668: { "name": "X-Ray P250 Package", "container_type": "Package" },
+    4669: { "name": "CS20 Case", "container_type": "Case" },
+    4695: { "name": "Prisma 2 Case", "container_type": "Case" },
+    4698: { "name": "Fracture Case", "container_type": "Case" },
+    4717: { "name": "Operation Broken Fang Case", "container_type": "Case" },
+    4747: { "name": "Snakebite Case", "container_type": "Case" },
+    4790: { "name": "Operation Riptide Case", "container_type": "Case" },
+    4818: { "name": "Dreams & Nightmares Case", "container_type": "Case" },
+    4846: { "name": "Recoil Case", "container_type": "Case" },
+    4880: { "name": "Revolution Case", "container_type": "Case" },
+    4904: { "name": "Kilowatt Case", "container_type": "Case" },
+
+
+    7003: { "name": "Gallery Case", "container_type": "Case" },
+    7007: { "name": "Fever Case", "container_type": "Case" }
+
+
+}
+
+
+event_type_data = {
+    # Действия трейдера с предметом
+    1: {"code": "listed", "name": "Продается"},
+    2: {"code": "not_listed", "name": "Не продается"}, 
+}
+
+-main.py
+import asyncio
+from .data.parser.CSfoat.parserFloat import *
+from .core.logger import *
+
+
+
+logger = get_logger("main")
+
+
+async def main():
+    try:
+        await started()
+    except Exception as e:
+        logger.error(f"Ошибка при выполнении main: {e}")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    connect-src 'self' http://localhost:8080 https://*.ngrok.io https://*.ngrok-free.app;
+  ">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSFloat Parser</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <div class="window">
+    <aside class="sidebar">
+      <div class="logo">CS<span>Float</span></div>
+      <nav class="nav" id="nav"></nav>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <div>
+          <div class="caption">CSFloat Parser</div>
+          <h1 class="title">Панель управления</h1>
+        </div>
+        <div class="topbar-right">
+          <input class="search" placeholder="Поиск..." />
+        </div>
+      </header>
+
+      <main class="content">
+
+        <!-- Баннер: API недоступен -->
+        <div id="api-banner" class="api-banner">
+          <span class="api-banner-icon">⚠️</span>
+          <span>API недоступно — сервер не запущен. Перейди в <b>Проекты</b> чтобы запустить Docker.</span>
+        </div>
+
+        <div class="cards-row">
+          <div class="card"><div class="card-label">Предметов</div><div id="card-unique-items" class="card-value loading">…</div></div>
+          <div class="card"><div class="card-label">Листингов</div><div id="card-total-listings" class="card-value loading">…</div></div>
+          <div class="card"><div class="card-label">Продано</div><div id="card-sold-listings" class="card-value loading">…</div></div>
+          <div class="card"><div class="card-label">Трейдеров</div><div id="card-unique-traders" class="card-value loading">…</div></div>
+          <div class="card"><div class="card-label">Событий</div><div id="card-total-actions" class="card-value loading">…</div></div>
+        </div>
+
+        <div class="ml-panel">
+          <div class="ml-header">
+            <span class="panel-title" style="margin:0">Готовность к обучению ML</span>
+            <span id="ml-badge" class="ml-badge badge-wait">⏳ Загрузка...</span>
+          </div>
+          <div class="progress-wrap"><div id="ml-progress-bar" class="progress-bar"></div></div>
+          <div class="progress-meta">
+            <span id="ml-level">…</span>
+            <span><span id="ml-progress-label">0%</span> до <span id="ml-target">…</span></span>
+          </div>
+          <div class="ml-grid">
+            <div class="ml-stat"><div class="ml-stat-label">ML-образцов</div><div class="ml-stat-value" id="ml-samples">…</div></div>
+            <div class="ml-stat"><div class="ml-stat-label">Доля sold</div><div class="ml-stat-value" id="ml-sold-ratio">…</div></div>
+            <div class="ml-stat"><div class="ml-stat-label">Цель</div><div class="ml-stat-value" id="ml-target2">…</div></div>
+          </div>
+          <div class="ml-rec" id="ml-rec">Загрузка данных...</div>
+        </div>
+
+        <div class="section-grid">
+          <div class="panel">
+            <h2 class="panel-title">Каталог предметов</h2>
+            <div class="stat-row"><span class="stat-label">Типов предметов</span><span id="cat-game-items" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Экземпляров</span><span id="cat-instances" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">С float</span><span id="cat-with-float" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Со стикерами</span><span id="cat-with-stickers" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">StatTrak</span><span id="cat-stattrak" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Souvenir</span><span id="cat-souvenir" class=".stat-value.loading">…</span></div>
+          </div>
+          <div class="panel">
+            <h2 class="panel-title">Рынок</h2>
+            <div class="stat-row"><span class="stat-label">Всего листингов</span><span id="mkt-total" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Активных</span><span id="mkt-active" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Продано</span><span id="mkt-sold" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">История цен</span><span id="mkt-history" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Средняя цена</span><span id="mkt-avg" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Макс. цена</span><span id="mkt-max" class=".stat-value.loading">…</span></div>
+          </div>
+          <div class="panel">
+            <h2 class="panel-title">Справочники</h2>
+            <div class="stat-row"><span class="stat-label">Оружий</span><span id="ref-weapons" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Скинов</span><span id="ref-skins" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Стикеров</span><span id="ref-stickers" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Качеств</span><span id="ref-qualities" class=".stat-value.loading">…</span></div>
+          </div>
+          <div class="panel">
+            <h2 class="panel-title">Трейдеры</h2>
+            <div class="stat-row"><span class="stat-label">Уникальных</span><span id="tr-traders" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Снимков</span><span id="tr-snapshots" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Событий listed</span><span id="tr-listed" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Событий sold</span><span id="tr-sold" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Снято</span><span id="tr-unlisted" class=".stat-value.loading">…</span></div>
+          </div>
+        </div>
+        <div class="section-grid" style="margin-top:16px">
+          <div class="panel">
+            <h2 class="panel-title">💰 Цены CSFloat</h2>
+            <div class="stat-row"><span class="stat-label">Предметов с ценой</span><span id="price-cf-with" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Всего предметов</span><span id="price-cf-total" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Покрытие</span><span id="price-cf-pct" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Обновлено</span><span id="price-cf-updated" class=".stat-value.loading">…</span></div>  <!-- ← добавили -->
+          </div>
+          <div class="panel">
+            <h2 class="panel-title">🟦 Цены Steam</h2>
+            <div class="stat-row"><span class="stat-label">Типов с историей цен</span><span id="price-st-with" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Всего типов (game_item)</span><span id="price-st-total" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Предметов с ценой</span><span id="price-st-count" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Предметов в инвентарях</span><span id="price-st-inv" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Покрытие</span><span id="price-st-pct" class=".stat-value.loading">…</span></div>
+            <div class="stat-row"><span class="stat-label">Обновлено</span><span id="price-st-updated" class=".stat-value.loading">…</span></div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="statusbar">
+        <span>
+          <span id="status-dot" class="status-dot dot-pending"></span>
+          <span id="status-text">Подключение...</span>
+        </span>
+        <span id="version-text">v0.1.0</span>
+      </footer>
+    </section>
+  </div>
+  <script type="module" src="../renderer.js"></script>
+</body>
+</html>

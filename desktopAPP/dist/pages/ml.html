@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    connect-src 'self' http://localhost:8080 https://*.ngrok.io https://*.ngrok-free.app;
+  ">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ML — CSFloat Parser</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <div class="window">
+    <aside class="sidebar">
+      <div class="logo">CS<span>Float</span></div>
+      <nav class="nav" id="nav"></nav>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <div>
+          <div class="caption">CSFloat Parser</div>
+          <h1 class="title">ML — Обучение модели</h1>
+        </div>
+        <div class="topbar-right">
+          <span id="status-dot" class="status-dot dot-pending"></span>
+          <span id="status-text" style="font-size:13px;color:#94a3b8">Подключение...</span>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <!-- Готовность данных -->
+        <div class="ml-panel">
+          <div class="ml-header">
+            <span class="panel-title" style="margin:0">Готовность данных</span>
+            <span id="ml2-badge" class="ml-badge badge-wait">⏳ Загрузка...</span>
+          </div>
+          <div class="progress-wrap">
+            <div id="ml2-progress-bar" class="progress-bar"></div>
+          </div>
+          <div class="progress-meta">
+            <span id="ml2-level">…</span>
+            <span><span id="ml2-progress-label">0%</span> до <span id="ml2-target">…</span></span>
+          </div>
+          <div class="ml-grid">
+            <div class="ml-stat"><div class="ml-stat-label">ML-образцов</div><div class="ml-stat-value" id="ml2-samples">…</div></div>
+            <div class="ml-stat"><div class="ml-stat-label">Доля sold</div><div class="ml-stat-value" id="ml2-sold-ratio">…</div></div>
+            <div class="ml-stat"><div class="ml-stat-label">Следующая цель</div><div class="ml-stat-value" id="ml2-target">…</div></div>
+          </div>
+          <div class="ml-rec" id="ml2-rec">Загрузка...</div>
+        </div>
+
+        <div class="section-grid">
+
+          <!-- Метрики модели -->
+          <div class="panel">
+            <h2 class="panel-title">Метрики модели</h2>
+            <div id="ml2-model-block">
+              <div class="ml-rec">Загрузка...</div>
+            </div>
+          </div>
+
+          <!-- Запуск обучения -->
+          <div class="panel">
+            <h2 class="panel-title">Запуск обучения</h2>
+            <p style="font-size:13px;color:#94a3b8;margin:0 0 16px">
+              Обучение может занять от 30 секунд до нескольких минут в зависимости от количества данных.
+              Не закрывай приложение во время обучения.
+            </p>
+            <button
+              id="ml2-train-btn"
+              class="primary-button"
+            >
+              🚀 Запустить обучение
+            </button>
+            <div id="ml2-train-log" style="
+              margin-top:16px;
+              font-size:13px;
+              color:#94a3b8;
+              background:#1e293b;
+              border-radius:8px;
+              padding:12px;
+              min-height:40px;
+              word-break:break-all;
+            "></div>
+          </div>
+
+        </div>
+      </main>
+
+      <footer class="statusbar">
+        <span>
+          <span id="status-dot" class="status-dot dot-pending"></span>
+          <span id="status-text">Подключение...</span>
+        </span>
+        <span id="version-text">v0.1.0</span>
+      </footer>
+    </section>
+  </div>
+  <script type="module" src="../renderer.js"></script>
+</body>
+</html>

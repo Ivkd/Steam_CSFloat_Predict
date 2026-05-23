@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Проекты - CSFloat Parser</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <div class="window">
+    <aside class="sidebar">
+      <div class="logo">CS<span>Float</span></div>
+      <nav class="nav" id="nav"></nav>
+    </aside>
+    <section class="main-area">
+      <header class="topbar">
+        <div>
+          <div class="caption">Инфраструктура</div>
+          <h1 class="title">Управление Docker</h1>
+        </div>
+        <div class="topbar-right">
+          <button class="btn-primary" onclick="dockerActionAll('start')">▶ Запустить все</button>
+          <button class="btn-danger" onclick="dockerActionAll('stop')">■ Остановить все</button>
+        </div>
+      </header>
+      <main class="content">
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title" style="margin:0">Контейнеры</h2>
+          </div>
+          <div id="docker-list"><div class="docker-loading">Загрузка...</div></div>
+        </div>
+        <div class="panel" style="margin-top:16px;">
+          <div class="panel-header"><h2 class="panel-title" style="margin:0">Логи контейнера</h2></div>
+          <pre id="docker-logs" class="docker-logs">Нажми на контейнер, чтобы увидеть логи</pre>
+        </div>
+      </main>
+      <footer class="statusbar">
+        <span><span id="status-dot" class="status-dot"></span><span id="status-text">Проверка...</span></span>
+        <span id="version-text">v0.1.0</span>
+      </footer>
+    </section>
+  </div>
+  <script type="module" src="../renderer.js"></script>
+</body>
+</html>
